@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Michelle Meier" />
+
+
+<title>GSE270486 Wounded dataset: putative CAM analysis</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Matters_Arising_Shimizu_etal</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">GSE270486 Wounded dataset: putative CAM
+analysis</h1>
+<h4 class="author">Michelle Meier</h4>
+<h4 class="date">01. June 2026</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-06-01
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong>
+<code>Matters_Arising_Shimizu_etal/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260601code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260601)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260601code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260601)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree066bb0f3f5c97e93504dc52359349b1cb6a604c8targetblank066bb0fa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/066bb0f3f5c97e93504dc52359349b1cb6a604c8" target="_blank">066bb0f</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree066bb0f3f5c97e93504dc52359349b1cb6a604c8targetblank066bb0fa"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/066bb0f3f5c97e93504dc52359349b1cb6a604c8" target="_blank">066bb0f</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    output/.DS_Store
+
+Untracked files:
+    Untracked:  data/DR_ribosomal_globin_genes.csv
+    Untracked:  data/GeneralCellrangerOutputs
+    Untracked:  data/Level_01_D10026_Wounded.qs2
+    Untracked:  data/OT_HB_genesets.csv
+    Untracked:  output/figures/
+    Untracked:  renv.lock
+    Untracked:  renv/
+
+Unstaged changes:
+    Modified:   .Rprofile
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd</code>) and
+HTML (<code>docs/Gaudi_Wounded_7dpf_putativeCAM_analysis.html</code>)
+files. If you’ve configured a remote Git repository (see
+<code>?wflow_git_remote</code>), click on the hyperlinks in the table
+below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/066bb0f3f5c97e93504dc52359349b1cb6a604c8/analysis/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd" target="_blank">066bb0f</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+<td>
+wflow_publish("analysis/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd")
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The purpose of this analysis is to investigate the putatitive CAM
+population Shimizu et al have presented in their Matter Arising to
+Nature.</p>
+<p>This is a dataset that we have made publicly available through our
+latest study <a
+href="https://www.nature.com/articles/s41586-025-10003-3">Convergent
+evolution of scavenger cell development at brain borders</a> and we will
+be using the RDS object we provided for the Wounded 7dpf dataset
+(GSE270486).</p>
+<p>Important dataset specs:</p>
+<ul>
+<li><p>Dev stage: 7dpf</p></li>
+<li><p>Tissue: Head</p></li>
+<li><p>Sorting: kdrl, mCherry+ FACS (very leaky, lots of other
+cells)</p></li>
+</ul>
+</div>
+<div id="set-up" class="section level1">
+<h1>Set-up</h1>
+<div id="load-libraries" class="section level2">
+<h2>Load libraries</h2>
+<pre class="r"><code>suppressPackageStartupMessages({
+  library(here)
+  library(scran)
+  library(scater)
+  library(scuttle)
+  library(scales)
+  library(readr)
+  library(Seurat)
+  library(ggpubr)
+  library(tidyverse)
+  library(qs2)
+  library(patchwork)
+})</code></pre>
+<pre><code>Warning: package &#39;scran&#39; was built under R version 4.5.3</code></pre>
+<pre><code>Warning: package &#39;SingleCellExperiment&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;SummarizedExperiment&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;MatrixGenerics&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;GenomicRanges&#39; was built under R version 4.5.2</code></pre>
+<pre><code>Warning: package &#39;BiocGenerics&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;S4Vectors&#39; was built under R version 4.5.3</code></pre>
+<pre><code>Warning: package &#39;IRanges&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;Seqinfo&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;Biobase&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;scuttle&#39; was built under R version 4.5.1</code></pre>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load data</h2>
+<pre class="r"><code>seurat &lt;- qs_read(here(&quot;data/Level_01_D10026_Wounded.qs2&quot;))</code></pre>
+</div>
+<div id="plotting-themes" class="section level2">
+<h2>Plotting themes</h2>
+<pre class="r"><code>plot_sizing &lt;- theme_bw()+ theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = &quot;black&quot;),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank()) 
+
+
+plot_sizing_seurat &lt;- theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = &quot;black&quot;),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14))
+
+rotate_x &lt;- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+strip_fix &lt;- theme(strip.background = element_rect(fill = &quot;white&quot;), 
+                   strip.text = element_text(size = 14))</code></pre>
+</div>
+<div id="colours" class="section level2">
+<h2>Colours</h2>
+<pre class="r"><code>wounded_colours &lt;- c(
+  &quot;#dbe2c6&quot;, #wildtype
+  &quot;#657c95&quot; #wounded
+)
+
+names(wounded_colours) &lt;- c(&quot;Control_kdrl&quot;, &quot;Wounded_kdrl&quot;)
+
+seurat$Sample_Name &lt;- factor(seurat$Sample_Name, levels = names(wounded_colours)) #wildtype always first</code></pre>
+</div>
+</div>
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<div id="cell-type-labels" class="section level2">
+<h2>Cell type labels</h2>
+<p>Show cell type labels:</p>
+<pre class="r"><code>DimPlot(seurat, label = T,repel=T) + ggtitle(&quot;Wounded: cell type labels&quot;)</code></pre>
+<p><img src="figure/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tbi-status-for-cell-types" class="section level2">
+<h2>TBI status for cell types</h2>
+<p>This dataset contains both wounded as well as control samples. Most
+of the immune cells actually come from the wounded sample.</p>
+<pre class="r"><code>seurat@meta.data %&gt;% 
+  group_by(L1_Predicted_phenotype, Sample_Name) %&gt;% 
+  summarise(., count =n()) %&gt;% 
+  ggplot(., aes(x = L1_Predicted_phenotype, y= count, fill=Sample_Name)) +
+  geom_bar(stat=&quot;identity&quot;, position = &quot;fill&quot;) +
+  scale_fill_manual(values = wounded_colours) +
+  plot_sizing + rotate_x + xlab(&quot;&quot;) + 
+  ggtitle(&quot;Wounded composition per celltype&quot;)</code></pre>
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by L1_Predicted_phenotype and Sample_Name.
+ℹ Output is grouped by L1_Predicted_phenotype.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(L1_Predicted_phenotype, Sample_Name))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.</code></pre>
+<p><img src="figure/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
+Get absolute numbers for macrophages. Neutrophils are all wounded</p>
+<pre class="r"><code>seurat@meta.data %&gt;% 
+  group_by(L1_Predicted_phenotype, Sample_Name) %&gt;% 
+  summarise(., count = n()) %&gt;% 
+  filter(., L1_Predicted_phenotype == &quot;Macrophage&quot;)</code></pre>
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by L1_Predicted_phenotype and Sample_Name.
+ℹ Output is grouped by L1_Predicted_phenotype.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(L1_Predicted_phenotype, Sample_Name))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.</code></pre>
+<pre><code># A tibble: 2 × 3
+# Groups:   L1_Predicted_phenotype [1]
+  L1_Predicted_phenotype Sample_Name  count
+  &lt;fct&gt;                  &lt;fct&gt;        &lt;int&gt;
+1 Macrophage             Control_kdrl    85
+2 Macrophage             Wounded_kdrl   237</code></pre>
+</div>
+</div>
+<div id="subset-to-immune-cells" class="section level1">
+<h1>Subset to Immune cells</h1>
+<div id="write-function-for-overview" class="section level2">
+<h2>Write function for overview</h2>
+<pre class="r"><code>expression_colours &lt;- c(&quot;#d9d9d9&quot;, &quot;#40004b&quot;)
+colours_myeloid_celltypes &lt;- c(&quot;grey&quot;, &quot;black&quot;, &quot;red&quot;)
+
+make_wounded_subfigures &lt;- function(object, genes_to_plot=genes){ #title
+  p1 &lt;- DimPlot(object, group.by = &quot;myeloid_celltype&quot;, cols = colours_myeloid_celltypes) + NoAxes() + ggtitle(&quot;Myeloid populations (n=349)&quot;)
+  p2 &lt;- DimPlot(object, group.by = &quot;Sample_Name&quot;, cols = wounded_colours) + NoAxes() + ggtitle(&quot;Wounding status&quot;)
+  p3 &lt;- DotPlot(object, features = genes_to_plot, group.by = &quot;myeloid_celltype&quot;, cols = expression_colours) + rotate_x + ylab(&quot;&quot;) + ggtitle(&quot;Gene expression patterns&quot;) #change genes
+  p4 &lt;- object@meta.data %&gt;% 
+  group_by(myeloid_celltype, Sample_Name) %&gt;% 
+  summarise(., count =n()) %&gt;% 
+  ggplot(., aes(x = myeloid_celltype, y= count, fill=Sample_Name)) +
+  geom_bar(stat=&quot;identity&quot;, position = &quot;stack&quot;) + 
+  scale_fill_manual(values = wounded_colours) +
+  geom_text(aes(label = count), 
+            position = position_stack(vjust=0.5),size=5, color=&quot;black&quot;,
+            )+
+  plot_sizing  + xlab(&quot;cluster&quot;)  +rotate_x + ggtitle(&quot;Wounded status composition&quot;)
+  
+  plot &lt;- (p1+p2+plot_layout(ncol=2, axes=&quot;collect&quot;)) +p3+p4 &amp; theme(plot.title = element_text(size = 18, face = &quot;italic&quot;))
+  
+  #  #add plotlayout
+  return(plot)
+  
+  
+}</code></pre>
+</div>
+<div id="filter-reprocess" class="section level2">
+<h2>filter + reprocess</h2>
+<pre class="r"><code>seurat &lt;- SetIdent(seurat, value = &quot;L1_Predicted_phenotype&quot;)
+myeloid &lt;- subset(seurat, idents = c(&quot;Macrophage&quot;, &quot;Neutrophil&quot;))
+myeloid</code></pre>
+<pre><code>An object of class Seurat 
+38833 features across 349 samples within 2 assays 
+Active assay: SCT (19142 features, 5022 variable features)
+ 3 layers present: counts, data, scale.data
+ 1 other assay present: RNA
+ 2 dimensional reductions calculated: pca, umap</code></pre>
+<pre class="r"><code># Github issue [here](https://github.com/satijalab/seurat/issues/6719) suggests that rerunning SCTransform actually is not necessarily required</code></pre>
+<p>They don’t say that they’ve rescaled/re-run SCT.</p>
+<pre class="r"><code>myeloid &lt;- myeloid %&gt;% 
+  RunPCA(., verbose = F) %&gt;% 
+  FindNeighbors(dims = c(1:10), verbose = F) %&gt;% 
+  FindClusters(resolution = 0.5, verbose = F) %&gt;% 
+  RunUMAP(dims = c(1:10), verbose = F)</code></pre>
+<pre><code>Warning: DimReduc pca changing from DimReduc to DimReduc</code></pre>
+<pre><code>Warning: Command RunPCA.SCT changing from SeuratCommand to SeuratCommand</code></pre>
+<pre><code>Warning: Command FindNeighbors.SCT.pca changing from SeuratCommand to
+SeuratCommand</code></pre>
+<pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
+To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
+This message will be shown once per session</code></pre>
+<pre><code>Warning: DimReduc umap changing from DimReduc to DimReduc</code></pre>
+<pre><code>Warning: Command RunUMAP.SCT.pca changing from SeuratCommand to SeuratCommand</code></pre>
+<p>Make the two plots to see if we can roughly get their clustering
+structure + gene expression patterns.</p>
+<pre class="r"><code>umap &lt;- DimPlot(myeloid)
+
+#update genes
+genes &lt;- c(&quot;apoc1&quot;, &quot;apoeb&quot;, &quot;p2ry12&quot;, &quot;sall3a&quot;, #microglia
+           &quot;csf1rb&quot;, &quot;spi1a&quot;, &quot;mpeg1.1&quot;, &quot;marco&quot;, #shared
+           &quot;cybb&quot;, &quot;f13a1b&quot;, &quot;cd74b&quot;, &quot;tgfbi&quot;, #CAM
+            &quot;lyve1a&quot;,&quot;lyve1b&quot;, &quot;mrc1a&quot;,&quot;mrc1b&quot; , &quot;dab2&quot;, &quot;stab1&quot;, &quot;stab2&quot; , #functional genes for BAM equivalence
+           &quot;mpx&quot;, &quot;mmp9&quot;, &quot;lyz&quot;#neutro
+           )
+
+dotplot &lt;- DotPlot(myeloid, features = genes, group.by = &quot;SCT_snn_res.0.5&quot;) + rotate_x
+
+umap + dotplot + plot_layout(widths = c(1,2))</code></pre>
+<p><img src="figure/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd/unnamed-chunk-11-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>Cluster 0,1 and 3 together would be microglia, cluster 2 would be
+putative “CAM” and cluster 4 neutrophils.</p>
+<pre class="r"><code>myeloid$SCT_snn_res.0.5 %&gt;% table()</code></pre>
+<pre><code>.
+  0   1   2   3   4 
+112 109  70  31  27 </code></pre>
+<p>Adding cell type labels with n and making pretty plots.</p>
+<pre class="r"><code>myeloid$myeloid_celltype &lt;- case_when(myeloid$SCT_snn_res.0.5 %in% c(0,1,3) ~ &quot;MG\nn=252&quot;,
+                                      myeloid$SCT_snn_res.0.5 == 2 ~ &quot;MG/Macro subpop\nn=70&quot;,
+                                      myeloid$SCT_snn_res.0.5 == 4 ~ &quot;Neutrophil\nn=27&quot;)</code></pre>
+<pre class="r"><code>names(colours_myeloid_celltypes) &lt;- c(&quot;MG\nn=252&quot;, &quot;Neutrophil\nn=27&quot;, &quot;MG/Macro subpop\nn=70&quot;)
+
+make_wounded_subfigures(myeloid) + plot_annotation(title = &quot;Wounded dataset 7dpf (GSE270486)&quot;)</code></pre>
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by myeloid_celltype and Sample_Name.
+ℹ Output is grouped by myeloid_celltype.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(myeloid_celltype, Sample_Name))` for per-operation
+  grouping (`?dplyr::dplyr_by`) instead.</code></pre>
+<p><img src="figure/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd/unnamed-chunk-14-1.png" width="1440" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="for-figure-individual-panels" class="section level1">
+<h1>For figure: individual panels</h1>
+<p>Make individual panels for illustrator figure. This ensures we keep
+the same dimensions. We also tend to adjust things like text size in
+illustrator as its a bit easier.</p>
+<div id="functions" class="section level2">
+<h2>Functions</h2>
+<p>Write some core functions.</p>
+<pre class="r"><code>plot_umap &lt;- function(seurat.object = myeloid,
+                      group, 
+                      title,
+                      save.dir = output,
+                      cols = NULL,
+                      project.name = name, 
+                      size = 10){
+  #with legend
+  umap &lt;- DimPlot(seurat.object,
+                  group.by = group,
+                  cols = cols,
+                  shuffle = T, 
+                  pt.size = 1,
+                  label = F) + NoAxes() + ggtitle(title)
+  
+  umapFileName &lt;- sprintf(&#39;%s/%s_umap_%s.pdf&#39;, save.dir, project.name, group)
+  ggsave(umapFileName,
+         umap,
+         device=&quot;pdf&quot;,
+         width=size,
+         height=size,
+         units=&quot;cm&quot;,
+         scale=1)
+  
+  #without legend
+  umap.nolegend &lt;- umap + NoLegend() + NoAxes() + ggtitle(&#39;&#39;)
+  umapFileName &lt;- sprintf(&#39;%s/%s_umap_%s_nolegend.pdf&#39;, save.dir, project.name, group)
+  ggsave(umapFileName,
+         umap.nolegend,
+         device=&quot;pdf&quot;,
+         width=size,
+         height=size,
+         units=&quot;cm&quot;,
+         scale=1)
+  
+  return(umap)
+}</code></pre>
+</div>
+<div id="make-panels" class="section level2">
+<h2>Make panels</h2>
+<pre class="r"><code>output &lt;- here(&quot;output/figures/&quot;)
+name &lt;- &quot;Wounded_GSE270486&quot;</code></pre>
+<pre class="r"><code>#use function
+p1 &lt;- plot_umap(group = &quot;myeloid_celltype&quot;, cols = colours_myeloid_celltypes, title = &quot;Myeloid populations (n=349)&quot;)
+p2 &lt;- plot_umap(group = &quot;Sample_Name&quot;, cols = wounded_colours, title = &quot;Wounding status&quot;)
+
+#dotplot
+p3 &lt;- DotPlot(myeloid, features = genes, group.by = &quot;myeloid_celltype&quot;, cols = expression_colours) + rotate_x + ylab(&quot;&quot;) + ggtitle(&quot;Gene expression patterns&quot;) 
+ggsave(sprintf(&quot;%s/%s_dotplot_myeloid_celltype.pdf&quot;, output, name),
+         p3,
+         device=&quot;pdf&quot;,
+         width=20,
+         height=10,
+         units=&quot;cm&quot;,
+         scale=1)
+
+#stacked barplot
+p4 &lt;- myeloid@meta.data %&gt;% 
+  group_by(myeloid_celltype, Sample_Name) %&gt;% 
+  summarise(., count =n()) %&gt;% 
+  ggplot(., aes(x = myeloid_celltype, y= count, fill=Sample_Name)) +
+  geom_bar(stat=&quot;identity&quot;, position = &quot;stack&quot;) + 
+  scale_fill_manual(values = wounded_colours) +
+  geom_text(aes(label = count), 
+            position = position_stack(vjust=0.5),size=5, color=&quot;black&quot;)+
+  plot_sizing  + xlab(&quot;&quot;)  +rotate_x + ggtitle(&quot;Wounded status composition&quot;)</code></pre>
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by myeloid_celltype and Sample_Name.
+ℹ Output is grouped by myeloid_celltype.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(myeloid_celltype, Sample_Name))` for per-operation
+  grouping (`?dplyr::dplyr_by`) instead.</code></pre>
+<pre class="r"><code>ggsave(sprintf(&quot;%s/%s_stacked_barplot_myeloid_celltype_wounded.pdf&quot;, output, name),
+         p4,
+         device=&quot;pdf&quot;,
+         width=13,
+         height=10,
+         units=&quot;cm&quot;,
+         scale=1)
+
+  
+(p1+p2+plot_layout(ncol=2, axes=&quot;collect&quot;)) +p3+p4 </code></pre>
+<p><img src="figure/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd/unnamed-chunk-17-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.5.0 (2025-04-11)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.7.4
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Australia/Melbourne
+tzcode source: internal
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices datasets  utils     methods  
+[8] base     
+
+other attached packages:
+ [1] future_1.70.0               patchwork_1.3.2            
+ [3] qs2_0.1.7                   lubridate_1.9.5            
+ [5] forcats_1.0.1               stringr_1.5.1              
+ [7] dplyr_1.2.1                 purrr_1.2.2                
+ [9] tidyr_1.3.2                 tibble_3.3.1               
+[11] tidyverse_2.0.0             ggpubr_0.6.3               
+[13] Seurat_5.4.0                SeuratObject_5.4.0         
+[15] sp_2.2-1                    readr_2.2.0                
+[17] scales_1.4.0                scater_1.38.1              
+[19] ggplot2_4.0.2               scran_1.38.1               
+[21] scuttle_1.20.0              SingleCellExperiment_1.32.0
+[23] SummarizedExperiment_1.40.0 Biobase_2.70.0             
+[25] GenomicRanges_1.62.1        Seqinfo_1.0.0              
+[27] IRanges_2.44.0              S4Vectors_0.48.1           
+[29] BiocGenerics_0.56.0         generics_0.1.4             
+[31] MatrixGenerics_1.22.0       matrixStats_1.5.0          
+[33] here_1.0.2                  workflowr_1.7.1            
+
+loaded via a namespace (and not attached):
+  [1] RcppAnnoy_0.0.23       splines_4.5.0          later_1.4.2           
+  [4] polyclip_1.10-7        fastDummies_1.7.5      lifecycle_1.0.5       
+  [7] rstatix_0.7.3          edgeR_4.8.2            rprojroot_2.1.1       
+ [10] globals_0.19.1         processx_3.8.6         lattice_0.22-6        
+ [13] MASS_7.3-65            backports_1.5.1        magrittr_2.0.3        
+ [16] limma_3.66.0           plotly_4.12.0          sass_0.4.10           
+ [19] rmarkdown_2.29         jquerylib_0.1.4        yaml_2.3.10           
+ [22] metapod_1.18.0         httpuv_1.6.16          otel_0.2.0            
+ [25] sctransform_0.4.3      spam_2.11-3            spatstat.sparse_3.1-0 
+ [28] reticulate_1.46.0      cowplot_1.2.0          pbapply_1.7-4         
+ [31] RColorBrewer_1.1-3     abind_1.4-8            Rtsne_0.17            
+ [34] git2r_0.36.2           ggrepel_0.9.8          irlba_2.3.7           
+ [37] spatstat.utils_3.2-2   listenv_0.10.1         goftest_1.2-3         
+ [40] RSpectra_0.16-2        spatstat.random_3.4-5  dqrng_0.4.1           
+ [43] fitdistrplus_1.2-6     parallelly_1.47.0      codetools_0.2-20      
+ [46] DelayedArray_0.36.1    tidyselect_1.2.1       farver_2.1.2          
+ [49] ScaledMatrix_1.18.0    viridis_0.6.5          spatstat.explore_3.8-0
+ [52] jsonlite_2.0.0         BiocNeighbors_2.4.0    Formula_1.2-5         
+ [55] progressr_0.19.0       ggridges_0.5.7         survival_3.8-3        
+ [58] systemfonts_1.3.2      tools_4.5.0            ragg_1.5.2            
+ [61] ica_1.0-3              Rcpp_1.0.14            glue_1.8.0            
+ [64] gridExtra_2.3          SparseArray_1.10.10    xfun_0.52             
+ [67] withr_3.0.2            BiocManager_1.30.27    fastmap_1.2.0         
+ [70] bluster_1.20.0         callr_3.7.6            digest_0.6.37         
+ [73] rsvd_1.0.5             timechange_0.4.0       R6_2.6.1              
+ [76] mime_0.13              textshaping_1.0.5      scattermore_1.2       
+ [79] tensor_1.5.1           spatstat.data_3.1-9    utf8_1.2.6            
+ [82] renv_1.1.4             data.table_1.18.2.1    httr_1.4.7            
+ [85] htmlwidgets_1.6.4      S4Arrays_1.10.1        whisker_0.4.1         
+ [88] uwot_0.2.4             pkgconfig_2.0.3        gtable_0.3.6          
+ [91] lmtest_0.9-40          S7_0.2.1-1             XVector_0.50.0        
+ [94] htmltools_0.5.8.1      carData_3.0-6          dotCall64_1.2         
+ [97] png_0.1-9              spatstat.univar_3.1-7  knitr_1.50            
+[100] rstudioapi_0.17.1      tzdb_0.5.0             reshape2_1.4.5        
+[103] nlme_3.1-168           cachem_1.1.0           zoo_1.8-15            
+[106] KernSmooth_2.23-26     parallel_4.5.0         miniUI_0.1.2          
+[109] vipor_0.4.7            pillar_1.11.1          grid_4.5.0            
+[112] vctrs_0.7.3            RANN_2.6.2             promises_1.5.0        
+[115] stringfish_0.18.0      car_3.1-5              BiocSingular_1.26.1   
+[118] beachmat_2.26.0        xtable_1.8-8           cluster_2.1.8.1       
+[121] beeswarm_0.4.0         evaluate_1.0.3         cli_3.6.5             
+[124] locfit_1.5-9.12        compiler_4.5.0         rlang_1.2.0           
+[127] ggsignif_0.6.4         future.apply_1.20.2    labeling_0.4.3        
+[130] ps_1.9.1               getPass_0.2-4          plyr_1.8.9            
+[133] fs_1.6.6               ggbeeswarm_0.7.3       stringi_1.8.7         
+[136] deldir_2.0-4           viridisLite_0.4.3      BiocParallel_1.44.0   
+[139] lazyeval_0.2.3         spatstat.geom_3.7-3    Matrix_1.7-3          
+[142] RcppHNSW_0.6.0         hms_1.1.4              statmod_1.5.1         
+[145] shiny_1.13.0           ROCR_1.0-12            broom_1.0.12          
+[148] igraph_2.2.3           RcppParallel_5.1.11-2  bslib_0.9.0           </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

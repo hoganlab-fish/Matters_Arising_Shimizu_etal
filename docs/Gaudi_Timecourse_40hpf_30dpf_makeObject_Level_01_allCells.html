@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Michelle Meier" />
+
+
+<title>GSE270486/GSE188342 Timecourse dataset: make Level 01 (all cells) object</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.34.0/datatables.js"></script>
+<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Matters_Arising_Shimizu_etal</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">GSE270486/GSE188342 Timecourse dataset:
+make Level 01 (all cells) object</h1>
+<h4 class="author">Michelle Meier</h4>
+<h4 class="date">01. June 2026</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-06-01
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong>
+<code>Matters_Arising_Shimizu_etal/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260601code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260601)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260601code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260601)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltreef5e725eaee66127715df5b99a189448f868d4312targetblankf5e725ea">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/f5e725eaee66127715df5b99a189448f868d4312" target="_blank">f5e725e</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltreef5e725eaee66127715df5b99a189448f868d4312targetblankf5e725ea"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/f5e725eaee66127715df5b99a189448f868d4312" target="_blank">f5e725e</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    DT/
+    Ignored:    analysis/figure/
+    Ignored:    output/.DS_Store
+    Ignored:    output/data/
+
+Untracked files:
+    Untracked:  analysis/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd
+    Untracked:  data/DR_ribosomal_globin_genes.csv
+    Untracked:  data/GeneralCellrangerOutputs
+    Untracked:  data/Level_01_D10026_Wounded.qs2
+    Untracked:  data/OT_HB_genesets.csv
+    Untracked:  output/figures/
+    Untracked:  renv.lock
+    Untracked:  renv/
+
+Unstaged changes:
+    Modified:   .Rprofile
+    Modified:   analysis/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd</code>)
+and HTML
+(<code>docs/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.html</code>)
+files. If you’ve configured a remote Git repository (see
+<code>?wflow_git_remote</code>), click on the hyperlinks in the table
+below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/f5e725eaee66127715df5b99a189448f868d4312/analysis/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd" target="_blank">f5e725e</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+<td>
+wflow_publish("analysis/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd")
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The purpose of this analysis is to investigate the putatitive CAM
+population Shimizu et al have presented in their Matter Arising to
+Nature. Specifically, this looks at the timecourse dataset, spanning
+40hpf - 30dpf.</p>
+<p>All the data used for this analysis are publicly available under
+either <a
+href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE270486">GSE270486</a>
+or <a
+href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188342">GSE188342</a>.
+The exception to this is the CellBender corrected count matrix for the
+30dpf sample (<a
+href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9038467">GSM9038467</a>)
+- we will be making these available on zenodo.</p>
+<p>Its important to note that the different samples were processed in
+different ways. The table bellow provides an overview. Also, we are only
+including wildtype samples - the 7dpf wounded as well as the 30dpf
+osr2-/- sample are not included.</p>
+<p>Important sample specs:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><strong>Dev Stage</strong></th>
+<th align="center"><strong>Samples</strong></th>
+<th align="center"><strong>Tissue</strong></th>
+<th align="center"><strong>Sorting</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">40hpf</td>
+<td align="center">Sample 20043, Sample 20048, Sample 20049</td>
+<td align="center"><strong>Whole embryo</strong></td>
+<td align="center">fli1a</td>
+</tr>
+<tr class="even">
+<td align="center">3dpf</td>
+<td align="center">Sample 20044</td>
+<td align="center"><strong>Whole embryo</strong></td>
+<td align="center">lyve1b, kdrl</td>
+</tr>
+<tr class="odd">
+<td align="center">4dpf</td>
+<td align="center">Sample 20125</td>
+<td align="center"><strong>Whole embryo</strong></td>
+<td align="center">fli1a, lyve1b</td>
+</tr>
+<tr class="even">
+<td align="center">5dpf</td>
+<td align="center">Sample 20045</td>
+<td align="center"><strong>Whole embryo</strong></td>
+<td align="center">lyve1b, kdrl</td>
+</tr>
+<tr class="odd">
+<td align="center">7dpf</td>
+<td align="center">Sample 20129</td>
+<td align="center"><strong>Head</strong></td>
+<td align="center">kdrl</td>
+</tr>
+<tr class="even">
+<td align="center">30dpf</td>
+<td align="center">Sample 20199</td>
+<td align="center"><strong>Head</strong></td>
+<td align="center">fli1a, lyve1b</td>
+</tr>
+</tbody>
+</table>
+<div id="load-libraries" class="section level2">
+<h2>Load libraries</h2>
+<pre class="r"><code>suppressPackageStartupMessages({
+  library(here)
+  library(scran)
+  library(scater)
+  library(scuttle)
+  library(scales)
+  library(readr)
+  library(Seurat)
+  library(ggpubr)
+  library(tidyverse)
+  library(qs2)
+  library(patchwork)
+  library(simspec)
+  library(scDblFinder)
+})</code></pre>
+</div>
+<div id="get-paths" class="section level2">
+<h2>get paths</h2>
+<pre class="r"><code>ribo_genes &lt;- read.table(here(&quot;data/DR_ribosomal_globin_genes.csv&quot;),
+                                                    sep=&quot;\t&quot;,
+                                                    stringsAsFactors=FALSE) %&gt;% 
+  pull(gene_name) %&gt;% as.character()
+  
+
+sample_20043 &lt;- here(&quot;data/GeneralCellrangerOutputs/Sample_20043/filtered_feature_bc_matrix&quot;)
+sample_20044 &lt;- here(&quot;data/GeneralCellrangerOutputs/Sample_20044/filtered_feature_bc_matrix&quot;)
+sample_20045 &lt;- here(&quot;data/GeneralCellrangerOutputs/Sample_20045/filtered_feature_bc_matrix&quot;)
+sample_20048 &lt;- here(&quot;data/GeneralCellrangerOutputs/Sample_20048/filtered_feature_bc_matrix&quot;)
+sample_20049 &lt;- here(&quot;data/GeneralCellrangerOutputs/Sample_20049/filtered_feature_bc_matrix&quot;)
+sample_20125 &lt;- here(&quot;data/GeneralCellrangerOutputs/Sample_20125/filtered_feature_bc_matrix&quot;)
+sample_20129 &lt;- here(&quot;data/GeneralCellrangerOutputs/Sample_20129/filtered_feature_bc_matrix&quot;)
+sample_20199 &lt;- here(&quot;data/GeneralCellrangerOutputs/S10199_cellbender_output_filtered_seurat.h5&quot;) #cellbender</code></pre>
+</div>
+<div id="plotting-themes" class="section level2">
+<h2>Plotting themes</h2>
+<pre class="r"><code>plot_sizing &lt;- theme_bw()+ theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = &quot;black&quot;),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank()) 
+
+
+plot_sizing_seurat &lt;- theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = &quot;black&quot;),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14))
+
+rotate_x &lt;- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+strip_fix &lt;- theme(strip.background = element_rect(fill = &quot;white&quot;), 
+                   strip.text = element_text(size = 14))</code></pre>
+</div>
+</div>
+<div id="generate-seurat-object" class="section level1">
+<h1>Generate seurat object</h1>
+<p>Write function to read in data for cellranger outputs.</p>
+<pre class="r"><code>read_cellranger &lt;- function(path,
+                            genes_remove = ribo_genes,
+                            sample_id, 
+                            stage){
+  counts &lt;- Read10X(path)
+  filtered_counts &lt;- counts[!(rownames(counts) %in% genes_remove),] #remove ribo genes
+  
+  seuratObject                      &lt;- CreateSeuratObject(
+                                                    counts=filtered_counts,
+                                                    min.cells = 5)
+  
+  seuratObject$SampleName &lt;- sample_id
+  seuratObject$Stage &lt;- stage
+  
+  return(seuratObject)
+  
+}</code></pre>
+<p>Let’s go.</p>
+<pre class="r"><code>list_seurat &lt;- list()</code></pre>
+<pre class="r"><code>list_seurat[[&quot;sample_20043&quot;]] &lt;- read_cellranger(path = sample_20043, stage = &quot;40hpf&quot;, sample_id = &quot;sample_20043&quot;)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<pre class="r"><code>list_seurat[[&quot;sample_20044&quot;]] &lt;- read_cellranger(path = sample_20044, stage = &quot;3dpf&quot;, sample_id = &quot;sample_20044&quot;)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<pre class="r"><code>list_seurat[[&quot;sample_20045&quot;]] &lt;- read_cellranger(path = sample_20045, stage = &quot;5dpf&quot;, sample_id = &quot;sample_20045&quot;)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<pre class="r"><code>list_seurat[[&quot;sample_20048&quot;]] &lt;- read_cellranger(path = sample_20048, stage = &quot;40hpf&quot;, sample_id = &quot;sample_20048&quot;)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<pre class="r"><code>list_seurat[[&quot;sample_20049&quot;]] &lt;- read_cellranger(path = sample_20049, stage = &quot;40hpf&quot;, sample_id = &quot;sample_20049&quot;)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<pre class="r"><code>list_seurat[[&quot;sample_20125&quot;]] &lt;- read_cellranger(path = sample_20125, stage = &quot;4dpf&quot;, sample_id = &quot;sample_20125&quot;)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<pre class="r"><code>list_seurat[[&quot;sample_20129&quot;]] &lt;- read_cellranger(path = sample_20129, stage = &quot;7dpf&quot;, sample_id = &quot;sample_20129&quot;)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<p>Add cellbender sample (30dpf) as well.</p>
+<pre class="r"><code>counts &lt;- Read10X_h5(sample_20199)
+seurat  &lt;- CreateSeuratObject(
+                                                    counts=counts[!(rownames(counts) %in% ribo_genes),],
+                                                    min.cells = 5)</code></pre>
+<pre><code>Warning: Feature names cannot have underscores (&#39;_&#39;), replacing with dashes
+(&#39;-&#39;)</code></pre>
+<pre class="r"><code>seurat$SampleName &lt;- &quot;sample_20199&quot;
+seurat$Stage &lt;- &quot;30dpf&quot;
+
+list_seurat[[&quot;sample_20199&quot;]] &lt;- seurat
+
+
+#clean up 
+rm(counts, seurat);gc()</code></pre>
+<pre><code>            used  (Mb) gc trigger   (Mb) limit (Mb)  max used   (Mb)
+Ncells  12243447 653.9   21096611 1126.7         NA  16148452  862.5
+Vcells 106188605 810.2  200373161 1528.8      49152 199640548 1523.2</code></pre>
+<p>Add % mito to all objects.</p>
+<pre class="r"><code>list_seurat &lt;- lapply(list_seurat, function(seurat){
+  seurat$`percent.mt` &lt;- PercentageFeatureSet(seurat,
+                                                pattern = &quot;^[mtMtMT-]&quot;)
+  return(seurat)
+})</code></pre>
+</div>
+<div id="qc" class="section level1">
+<h1>QC</h1>
+<p>Make function for densitiy and correlation plots.</p>
+<pre class="r"><code>make_density_plots &lt;- function(seurat){
+  plot_list &lt;- list()
+
+  #ncount
+  p1 &lt;- ggplot(seurat@meta.data, aes(x=log10(nCount_RNA))) + 
+    geom_histogram(aes(y=..density..), colour=&quot;black&quot;, fill=&quot;white&quot;)+
+    geom_density(alpha=.2, fill=&quot;#FF6666&quot;)+ xlab(&#39;log10(count)&#39;) +
+    plot_sizing + ggtitle(sprintf(&quot;Library size, %s&quot;, seurat$SampleName))
+  
+  #nfeat
+  p2 &lt;- ggplot(seurat@meta.data, aes(x=log10(nFeature_RNA))) + 
+    geom_histogram(aes(y=..density..), colour=&quot;black&quot;, fill=&quot;white&quot;)+
+    geom_density(alpha=.2, fill=&quot;#FF6666&quot;)+ xlab(&#39;log10(nfeature)&#39;) +
+    plot_sizing + ggtitle(sprintf(&quot;#features, %s&quot;,  seurat$SampleName))
+  
+  #mito
+  p3 &lt;- ggplot(seurat@meta.data, aes(x=percent.mt)) + 
+    geom_histogram(aes(y=..density..), colour=&quot;black&quot;, fill=&quot;white&quot;)+
+    geom_density(alpha=.2, fill=&quot;#FF6666&quot;)+ xlab(&#39;percent.mt&#39;) +
+    plot_sizing + ggtitle(sprintf(&quot;mito, %s&quot;,  seurat$SampleName))
+  
+  return(p1+p2+p3)
+  
+}
+
+make_correlation_plots &lt;- function(seurat){
+  plot_list &lt;- list()
+
+  meta &lt;- seurat@meta.data %&gt;% 
+    mutate(., log10ncount = log10(nCount_RNA),
+              log10nfeat = log10(nFeature_RNA))
+  
+  #ncount
+  p1 &lt;- ggscatter(meta, x = &quot;log10ncount&quot;, y = &quot;log10nfeat&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;log10(#features)&quot;) + xlab(&quot;log10(nCount)&quot;) +
+    stat_cor(method = &quot;pearson&quot;, label.x = 2.5, label.y = 4, size = 5) +
+    ggtitle(sprintf(&quot;Lib size vs #features, %s&quot;, seurat$SampleName))
+  
+  #nfeat
+  p2 &lt;- ggscatter(meta, x = &quot;log10ncount&quot;, y = &quot;percent.mt&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;%mito&quot;) + xlab(&quot;log10(nCount)&quot;) +
+    stat_cor(method = &quot;pearson&quot;, label.x = 2.5, label.y = 80, size = 5) +
+    ggtitle(sprintf(&quot;Lib size vs mito, %s&quot;,  seurat$SampleName))
+  
+  #mito
+  p3 &lt;- ggscatter(meta, x = &quot;log10nfeat&quot;, y = &quot;percent.mt&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;%mito&quot;) + xlab(&quot;log10(#features)&quot;) +
+    stat_cor(method = &quot;pearson&quot;, label.x = 2.5, label.y = 80, size = 5) +
+    ggtitle(sprintf(&quot;#features vs mito, %s&quot;,  seurat$SampleName))
+  
+  return(p1+p2+p3)
+  
+}</code></pre>
+<div id="lib-size-nfeatures-mito" class="section level2">
+<h2>Lib size, nfeatures, %mito</h2>
+<pre class="r"><code>plot_list &lt;- lapply(list_seurat, make_density_plots)
+
+wrap_plots(plot_list, ncol=1) + plot_layout(axis_titles = &quot;collect&quot;)</code></pre>
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We know from previous explorations that the osr2 experiment did a
+weird thing where we get two peaks. We will have to manually filter that
+one. All other samples can be filtered as done previously.</p>
+</div>
+<div id="correlations" class="section level2">
+<h2>Correlations</h2>
+<pre class="r"><code>plot_list &lt;- lapply(list_seurat, make_correlation_plots)
+
+wrap_plots(plot_list, ncol=1) + plot_layout(axis_titles = &quot;collect&quot;)</code></pre>
+<p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd/unnamed-chunk-11-1.png" width="1440" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="doublet-calling" class="section level1">
+<h1>Doublet calling</h1>
+<p>We do not usually remove doublets for developmental datasets as we’ve
+observed that this step removes true biological intermediates. We’ll
+predict doublets, and check how this aligns with 10X expected doublet
+values.</p>
+<pre class="r"><code>run_scDblFinder &lt;- function(seurat){
+  sce &lt;- as.SingleCellExperiment(seurat) #convert
+  
+  sce &lt;- logNormCounts(sce) %&gt;% #run steps
+  runPCA() %&gt;%
+  runUMAP()
+  
+  set.seed(1997)#for reproducibility
+  sce &lt;- scDblFinder(sce, clusters = T) #run scDblFinder with clusters,verbose=F
+  
+  #add to seurat
+  seurat$scDblFinder.class &lt;- sce$scDblFinder.class #actual label
+  seurat$scDblFinder.cxds_score &lt;- sce$scDblFinder.cxds_score #co-expression score
+  
+  return(seurat)
+}</code></pre>
+<pre class="r"><code>list_seurat &lt;- lapply(list_seurat, run_scDblFinder)</code></pre>
+<pre><code>Warning: Layer &#39;data&#39; is empty</code></pre>
+<pre><code>Warning: Layer &#39;scale.data&#39; is empty</code></pre>
+<pre><code>Warning in .checkSCE(sce, coerce = is.null(samples)): Some cells in `sce` have
+an extremely low read counts; note that these could trigger errors and might
+best be filtered out</code></pre>
+<pre><code>Clustering cells...</code></pre>
+<pre><code>13 clusters</code></pre>
+<pre><code>Creating ~6989 artificial doublets...</code></pre>
+<pre><code>Dimensional reduction</code></pre>
+<pre><code>Evaluating kNN...</code></pre>
+<pre><code>Training model...</code></pre>
+<pre><code>iter=0, 580 cells excluded from training.</code></pre>
+<pre><code>iter=1, 683 cells excluded from training.</code></pre>
+<pre><code>iter=2, 739 cells excluded from training.</code></pre>
+<pre><code>Threshold found:0.382</code></pre>
+<pre><code>888 (10.2%) doublets called</code></pre>
+<pre><code>Warning: Layer &#39;data&#39; is empty</code></pre>
+<pre><code>Warning: Layer &#39;scale.data&#39; is empty</code></pre>
+<pre><code>Warning in .checkSCE(sce, coerce = is.null(samples)): Some cells in `sce` have
+an extremely low read counts; note that these could trigger errors and might
+best be filtered out</code></pre>
+<pre><code>Clustering cells...</code></pre>
+<pre><code>8 clusters</code></pre>
+<pre><code>Creating ~1792 artificial doublets...</code></pre>
+<pre><code>Dimensional reduction</code></pre>
+<pre><code>Evaluating kNN...</code></pre>
+<pre><code>Training model...</code></pre>
+<pre><code>iter=0, 122 cells excluded from training.</code></pre>
+<pre><code>iter=1, 117 cells excluded from training.</code></pre>
+<pre><code>iter=2, 112 cells excluded from training.</code></pre>
+<pre><code>Threshold found:0.751</code></pre>
+<pre><code>123 (5.5%) doublets called</code></pre>
+<pre><code>Warning: Layer &#39;data&#39; is empty</code></pre>
+<pre><code>Warning: Layer &#39;scale.data&#39; is empty</code></pre>
+<pre><code>Clustering cells...</code></pre>
+<pre><code>9 clusters</code></pre>
+<pre><code>Creating ~5656 artificial doublets...</code></pre>
+<pre><code>Dimensional reduction</code></pre>
+<pre><code>Evaluating kNN...</code></pre>
+<pre><code>Training model...</code></pre>
+<pre><code>iter=0, 481 cells excluded from training.</code></pre>
+<pre><code>iter=1, 512 cells excluded from training.</code></pre>
+<pre><code>iter=2, 520 cells excluded from training.</code></pre>
+<pre><code>Threshold found:0.395</code></pre>
+<pre><code>643 (9.1%) doublets called</code></pre>
+<pre><code>Warning: Layer &#39;data&#39; is empty
+Layer &#39;scale.data&#39; is empty</code></pre>
+<pre><code>Warning in .checkSCE(sce, coerce = is.null(samples)): Some cells in `sce` have
+an extremely low read counts; note that these could trigger errors and might
+best be filtered out</code></pre>
+<pre><code>Clustering cells...</code></pre>
+<pre><code>11 clusters</code></pre>
+<pre><code>Creating ~7001 artificial doublets...</code></pre>
+<pre><code>Dimensional reduction</code></pre>
+<pre><code>Evaluating kNN...</code></pre>
+<pre><code>Training model...</code></pre>
+<pre><code>iter=0, 848 cells excluded from training.</code></pre>
+<pre><code>iter=1, 881 cells excluded from training.</code></pre>
+<pre><code>iter=2, 905 cells excluded from training.</code></pre>
+<pre><code>Threshold found:0.466</code></pre>
+<pre><code>957 (10.9%) doublets called</code></pre>
+<pre><code>Warning: Layer &#39;data&#39; is empty</code></pre>
+<pre><code>Warning: Layer &#39;scale.data&#39; is empty</code></pre>
+<pre><code>Clustering cells...</code></pre>
+<pre><code>10 clusters</code></pre>
+<pre><code>Creating ~3332 artificial doublets...</code></pre>
+<pre><code>Dimensional reduction</code></pre>
+<pre><code>Evaluating kNN...</code></pre>
+<pre><code>Training model...</code></pre>
+<pre><code>iter=0, 284 cells excluded from training.</code></pre>
+<pre><code>iter=1, 289 cells excluded from training.</code></pre>
+<pre><code>iter=2, 276 cells excluded from training.</code></pre>
+<pre><code>Threshold found:0.678</code></pre>
+<pre><code>305 (7.3%) doublets called</code></pre>
+<pre><code>Warning: Layer &#39;data&#39; is empty
+Layer &#39;scale.data&#39; is empty</code></pre>
+<pre><code>Clustering cells...</code></pre>
+<pre><code>10 clusters</code></pre>
+<pre><code>Creating ~4502 artificial doublets...</code></pre>
+<pre><code>Dimensional reduction</code></pre>
+<pre><code>Evaluating kNN...</code></pre>
+<pre><code>Training model...</code></pre>
+<pre><code>iter=0, 313 cells excluded from training.</code></pre>
+<pre><code>iter=1, 357 cells excluded from training.</code></pre>
+<pre><code>iter=2, 373 cells excluded from training.</code></pre>
+<pre><code>Threshold found:0.429</code></pre>
+<pre><code>447 (7.9%) doublets called</code></pre>
+<pre><code>Warning: Layer &#39;data&#39; is empty
+Layer &#39;scale.data&#39; is empty</code></pre>
+<pre><code>Clustering cells...</code></pre>
+<pre><code>9 clusters</code></pre>
+<pre><code>Creating ~2528 artificial doublets...</code></pre>
+<pre><code>Dimensional reduction</code></pre>
+<pre><code>Evaluating kNN...</code></pre>
+<pre><code>Training model...</code></pre>
+<pre><code>iter=0, 170 cells excluded from training.</code></pre>
+<pre><code>iter=1, 174 cells excluded from training.</code></pre>
+<pre><code>iter=2, 181 cells excluded from training.</code></pre>
+<pre><code>Threshold found:0.597</code></pre>
+<pre><code>191 (6%) doublets called</code></pre>
+<pre><code>Warning: Layer &#39;data&#39; is empty
+Layer &#39;scale.data&#39; is empty</code></pre>
+<pre><code>Warning in .checkSCE(sce, coerce = is.null(samples)): Some cells in `sce` have
+an extremely low read counts; note that these could trigger errors and might
+best be filtered out</code></pre>
+<pre><code>Clustering cells...</code></pre>
+<pre><code>12 clusters</code></pre>
+<pre><code>Creating ~10742 artificial doublets...</code></pre>
+<pre><code>Dimensional reduction</code></pre>
+<pre><code>Evaluating kNN...</code></pre>
+<pre><code>Training model...</code></pre>
+<pre><code>iter=0, 1562 cells excluded from training.</code></pre>
+<pre><code>iter=1, 1480 cells excluded from training.</code></pre>
+<pre><code>iter=2, 1316 cells excluded from training.</code></pre>
+<pre><code>Threshold found:0.467</code></pre>
+<pre><code>1391 (10.4%) doublets called</code></pre>
+<p>Compute expected vs detected doublet rate per sample. All of these
+should be 10x, so they follow the 8% per 10k.</p>
+<pre class="r"><code>comp_table &lt;- lapply(list_seurat, function(seurat){
+  df_out &lt;- data.frame(expected = (ncol(seurat)* 0.008)/1000,
+                       observed = nrow(seurat@meta.data %&gt;% filter(scDblFinder.class == &quot;doublet&quot;))/ncol(seurat))
+  return(df_out)
+}) %&gt;% bind_rows(., .id=&quot;sample&quot;)</code></pre>
+<pre class="r"><code>DT::datatable(comp_table)</code></pre>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-452b076a067c1bc07ab5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-452b076a067c1bc07ab5">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8"],["sample_20043","sample_20044","sample_20045","sample_20048","sample_20049","sample_20125","sample_20129","sample_20199"],[0.06988800000000001,0.01792,0.056552,0.070008,0.03332,0.045016,0.02528,0.107416],[0.1016483516483516,0.05491071428571428,0.09096053189984439,0.1093589304079534,0.07322929171668667,0.07943842189443753,0.06044303797468355,0.1035972294630223]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>sample<\/th>\n      <th>expected<\/th>\n      <th>observed<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"sample","targets":1},{"name":"expected","targets":2},{"name":"observed","targets":3}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<p>You can clearly see that for the dev samples expected &lt; observed -
+importantly, scDblFinder uses the expected value as prior, so there are
+definitively too many doublets detected for these samples. Lets not
+remove them, to preserve real intermediate stages. For the osr2 dataset,
+I suggest we remove because the metrics match + they loaded a lot of
+cells (20k) + they should not have any non-doublet intermediate stages
+anymore.</p>
+</div>
+<div id="filter-cells" class="section level1">
+<h1>Filter cells</h1>
+<p>Make function to remove based on thresholds. I’m putting in the
+general lab threshold we’ve used which work well for us. In most
+cases…</p>
+<pre class="r"><code>run_qc &lt;- function(seurat, 
+                   nmads=5,
+                   nfeatures=200,
+                   mt_threshold=20,
+                   doublet_filter=FALSE){
+  
+  #detect nmads outliers
+  lib_size_outliers                     &lt;- isOutlier(seurat$nCount_RNA,nmads = nmads, log = T)
+
+  seurat_filtered                       &lt;- seurat[,!lib_size_outliers]
+
+  #remove nFeature threshold
+  seurat_filtered   &lt;- subset(seurat_filtered,
+                                                subset = nFeature_RNA &gt; nfeatures)
+
+  # Remove mitochondria-high cells
+  seurat_filtered                       &lt;- subset(seurat_filtered,
+                                                subset = percent.mt &lt; mt_threshold)
+
+  # Remove doublets
+  if (doublet_filter){
+    seurat_filtered                         &lt;- subset(seurat_filtered,
+                                                subset = scDblFinder.class == &quot;singlet&quot;)
+  }
+  
+  
+  return(seurat_filtered)
+  
+}</code></pre>
+<p>Run filter for each sample.</p>
+<pre class="r"><code>list_seurat[[&quot;sample_20043&quot;]] &lt;- run_qc(seurat = list_seurat[[&quot;sample_20043&quot;]])
+list_seurat[[&quot;sample_20044&quot;]] &lt;- run_qc(seurat = list_seurat[[&quot;sample_20044&quot;]])
+list_seurat[[&quot;sample_20045&quot;]] &lt;- run_qc(seurat = list_seurat[[&quot;sample_20045&quot;]])
+list_seurat[[&quot;sample_20048&quot;]] &lt;- run_qc(seurat = list_seurat[[&quot;sample_20048&quot;]])
+list_seurat[[&quot;sample_20049&quot;]] &lt;- run_qc(seurat = list_seurat[[&quot;sample_20049&quot;]])
+list_seurat[[&quot;sample_20125&quot;]] &lt;- run_qc(seurat = list_seurat[[&quot;sample_20125&quot;]])
+list_seurat[[&quot;sample_20129&quot;]] &lt;- run_qc(seurat = list_seurat[[&quot;sample_20129&quot;]])
+
+#different choices for osr2 dataset
+list_seurat[[&quot;sample_20199&quot;]] &lt;- run_qc(seurat = list_seurat[[&quot;sample_20199&quot;]], nfeatures = 600, doublet_filter = TRUE)</code></pre>
+<div id="post-filter-histograms" class="section level2">
+<h2>post filter histograms</h2>
+<pre class="r"><code>plot_list &lt;- lapply(list_seurat, make_density_plots)
+
+wrap_plots(plot_list, ncol=1) + plot_annotation(title = &quot;post filtering&quot;)</code></pre>
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="merge-dimensionality-reduction" class="section level1">
+<h1>Merge + dimensionality reduction</h1>
+<pre class="r"><code>Level_01_seuratObject &lt;- merge(list_seurat[[1]],
+                                     y = c(list_seurat[[2]],
+                                           list_seurat[[3]],
+                                           list_seurat[[4]],
+                                           list_seurat[[5]],
+                                           list_seurat[[6]],
+                                           list_seurat[[7]],
+                                          list_seurat[[8]]),
+                                     project = &quot;Timecourse&quot;, 
+                                      merge.data = TRUE)</code></pre>
+<pre><code>Warning: Some cell names are duplicated across objects provided. Renaming to
+enforce unique cell names.</code></pre>
+<pre class="r"><code>Level_01_seuratObject&lt;- JoinLayers(Level_01_seuratObject) #seurat v5 things
+
+Level_01_seuratObject</code></pre>
+<pre><code>An object of class Seurat 
+21725 features across 42255 samples within 1 assay 
+Active assay: RNA (21725 features, 0 variable features)
+ 1 layer present: counts</code></pre>
+<pre class="r"><code>#clean up
+rm(list_seurat, comp_table, plot_list);gc()</code></pre>
+<pre><code>            used   (Mb) gc trigger   (Mb) limit (Mb)  max used   (Mb)
+Ncells  12815950  684.5   21096611 1126.7         NA  21096611 1126.7
+Vcells 176754861 1348.6  499187870 3808.6      49152 415916840 3173.2</code></pre>
+<div id="run-dim-reduction" class="section level2">
+<h2>run dim reduction</h2>
+<p>Need to run this before integration (see their <a
+href="https://github.com/quadbio/simspec">github</a>).</p>
+<pre class="r"><code>Level_01_seuratObject   &lt;- NormalizeData(Level_01_seuratObject, verbose = F) %&gt;% 
+  FindVariableFeatures(. , verbose = F) %&gt;% 
+  ScaleData(., split.by = &quot;SampleName&quot;,features = rownames(Level_01_seuratObject), verbose = F) %&gt;% #using split by argument because we have massive library size effects
+  RunPCA(.,npcs = 20, verbose = F) </code></pre>
+</div>
+</div>
+<div id="integrate-with-css-simspec" class="section level1">
+<h1>Integrate with CSS (simspec)</h1>
+<p>We find this works well for our developmental datasets. Their <a
+href="https://github.com/quadbio/simspec">github</a></p>
+<pre class="r"><code>#   Integrate data
+Level_01_seuratObject       &lt;- cluster_sim_spectrum(
+  object = Level_01_seuratObject,
+  label_tag = &quot;Stage&quot;)</code></pre>
+<pre><code>Start to do clustering for each sample...</code></pre>
+<pre><code>  Done clustering of sample 30dpf.</code></pre>
+<pre><code>  Done clustering of sample 3dpf.</code></pre>
+<pre><code>  Done clustering of sample 40hpf.</code></pre>
+<pre><code>  Done clustering of sample 4dpf.</code></pre>
+<pre><code>  Done clustering of sample 5dpf.</code></pre>
+<pre><code>  Done clustering of sample 7dpf.</code></pre>
+<pre><code>Finished clustering.</code></pre>
+<pre><code>Calculating average profiles of clusters...</code></pre>
+<pre><code>Calculating standardized similarities to clusters...</code></pre>
+<pre><code>Doing z-transformation...</code></pre>
+<pre><code>Done. Returning results...</code></pre>
+<pre class="r"><code>Level_01_seuratObject       &lt;- RunUMAP(Level_01_seuratObject,
+                                             reduction = &quot;css&quot;,
+                                             dims = 1:ncol(Embeddings(Level_01_seuratObject, &quot;css&quot;)), verbose = F) %&gt;% 
+  FindNeighbors(.,reduction = &quot;css&quot;,
+                dims = 1:ncol(Embeddings(Level_01_seuratObject, &quot;css&quot;)), verbose = F) %&gt;% 
+    FindClusters(., resolution = seq(0.1, 1, 0.1), verbose = F)</code></pre>
+<pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
+To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
+This message will be shown once per session</code></pre>
+</div>
+<div id="look-at-dataset" class="section level1">
+<h1>Look at dataset</h1>
+<div id="css-correlations" class="section level2">
+<h2>CSS correlations</h2>
+<p>Look at correlation of certain dataset metrics with CSS</p>
+<pre class="r"><code>run_css_correlations &lt;- function(seurat){
+  plot_list &lt;- list()
+
+  meta &lt;- seurat@meta.data %&gt;% 
+    mutate(., log10ncount = log10(nCount_RNA),
+              log10nfeat = log10(nFeature_RNA)) %&gt;% 
+    select(., log10ncount, log10nfeat) %&gt;% 
+    rownames_to_column(&quot;Barcode&quot;) %&gt;% 
+    full_join(., seurat@reductions$css@cell.embeddings %&gt;% as.data.frame() %&gt;% rownames_to_column(&quot;Barcode&quot;) %&gt;% select(., Barcode, CSS_1, CSS_2,CSS_3))
+  
+  p1 &lt;- ggscatter(meta, x = &quot;CSS_1&quot;, y = &quot;log10ncount&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;log10(nCount)&quot;) + xlab(&quot;CSS_1&quot;) +
+    stat_cor(method = &quot;pearson&quot;, size = 5, colour = &quot;red4&quot;) +
+    ggtitle(sprintf(&quot;CSS_1 vs library size, %s&quot;, seurat@project.name))
+  
+  p2 &lt;- ggscatter(meta, x = &quot;CSS_2&quot;, y = &quot;log10ncount&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;log10(nCount)&quot;) + xlab(&quot;CSS_2&quot;) +
+    stat_cor(method = &quot;pearson&quot;, size = 5, colour = &quot;red4&quot;) +
+    ggtitle(sprintf(&quot;CSS_2 vs library size, %s&quot;, seurat@project.name))
+  
+  p3&lt;- ggscatter(meta, x = &quot;CSS_3&quot;, y = &quot;log10ncount&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;log10(nCount)&quot;) + xlab(&quot;CSS_3&quot;) +
+    stat_cor(method = &quot;pearson&quot;, size = 5, colour = &quot;red4&quot;) +
+    ggtitle(sprintf(&quot;CSS_3 vs library size, %s&quot;, seurat@project.name))
+  
+  return(p1+p2+p3)
+}</code></pre>
+<pre class="r"><code>run_css_correlations(Level_01_seuratObject)</code></pre>
+<pre><code>Joining with `by = join_by(Barcode)`</code></pre>
+<p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd/unnamed-chunk-24-1.png" width="1440" style="display: block; margin: auto;" /></p>
+</div>
+<div id="umap-overviews" class="section level2">
+<h2>UMAP overviews</h2>
+<pre class="r"><code>plot_list &lt;- list()
+
+plot_list[[1]] &lt;- FeaturePlot(object = Level_01_seuratObject, features = &quot;nCount_RNA&quot;, min.cutoff = &quot;q1&quot;, max.cutoff = &quot;q99&quot;)
+plot_list[[2]] &lt;- FeaturePlot(object = Level_01_seuratObject, features = &quot;nFeature_RNA&quot;, min.cutoff = &quot;q1&quot;, max.cutoff = &quot;q99&quot;)
+plot_list[[3]] &lt;- FeaturePlot(object = Level_01_seuratObject, features = &quot;percent.mt&quot;)
+plot_list[[4]] &lt;- DimPlot(object = Level_01_seuratObject, group.by = &quot;SampleName&quot;, shuffle = T)
+plot_list[[5]] &lt;- DimPlot(object = Level_01_seuratObject, group.by = &quot;Stage&quot;, shuffle = T)
+plot_list[[6]] &lt;- DimPlot(object = Level_01_seuratObject, group.by = &quot;scDblFinder.class&quot;, shuffle = T)
+
+wrap_plots(plot_list, axes = &quot;collect&quot;)</code></pre>
+<p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd/unnamed-chunk-25-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p>Stage/Sample split - are the 40hpf sitting together?</p>
+<pre class="r"><code>DimPlot(object = Level_01_seuratObject, group.by = &quot;SampleName&quot;, shuffle = T, split.by = &quot;Stage&quot;)</code></pre>
+<p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd/unnamed-chunk-26-1.png" width="1920" style="display: block; margin: auto;" /></p>
+</div>
+<div id="per-cluster-metrics" class="section level2">
+<h2>Per cluster metrics</h2>
+<pre class="r"><code>plot_list &lt;- list()
+
+plot_list[[1]] &lt;- Level_01_seuratObject@meta.data %&gt;% 
+  ggplot(., aes(y = log10(nCount_RNA), x = seurat_clusters, fill=seurat_clusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = &quot;none&quot;) + ggtitle(&quot;Library size&quot;)
+
+plot_list[[2]] &lt;- Level_01_seuratObject@meta.data %&gt;% 
+  ggplot(., aes(y = log10(nFeature_RNA), x = seurat_clusters, fill=seurat_clusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = &quot;none&quot;) + ggtitle(&quot;#genes&quot;)
+
+plot_list[[3]] &lt;- Level_01_seuratObject@meta.data %&gt;% 
+  ggplot(., aes(y = percent.mt, x = seurat_clusters, fill=seurat_clusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = &quot;none&quot;) + ggtitle(&quot;%mito&quot;)
+
+wrap_plots(plot_list, axes = &quot;collect&quot;, ncol=2)</code></pre>
+<p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.Rmd/unnamed-chunk-27-1.png" width="1440" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="clean-up" class="section level1">
+<h1>Clean up</h1>
+<p>Shouldn’t be much, but rearrange time points and make factors.</p>
+<pre class="r"><code>Level_01_seuratObject$Stage &lt;- factor(Level_01_seuratObject$Stage, levels = c(&quot;40hpf&quot;, &quot;3dpf&quot;, &quot;4dpf&quot; , &quot;5dpf&quot;, &quot;7dpf&quot;,  &quot;30dpf&quot;))</code></pre>
+</div>
+<div id="export" class="section level1">
+<h1>Export</h1>
+<p>Let’s save this!</p>
+<pre class="r"><code>filename &lt;- here(&quot;output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_01.qs2&quot;)
+qs_save(object = Level_01_seuratObject, file = filename)</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.5.0 (2025-04-11)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.7.4
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Australia/Melbourne
+tzcode source: internal
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices datasets  utils     methods  
+[8] base     
+
+other attached packages:
+ [1] future_1.70.0               scDblFinder_1.24.10        
+ [3] simspec_0.0.0.9000          patchwork_1.3.2            
+ [5] qs2_0.1.7                   lubridate_1.9.5            
+ [7] forcats_1.0.1               stringr_1.5.1              
+ [9] dplyr_1.2.1                 purrr_1.2.2                
+[11] tidyr_1.3.2                 tibble_3.3.1               
+[13] tidyverse_2.0.0             ggpubr_0.6.3               
+[15] Seurat_5.4.0                SeuratObject_5.4.0         
+[17] sp_2.2-1                    readr_2.2.0                
+[19] scales_1.4.0                scater_1.38.1              
+[21] ggplot2_4.0.2               scran_1.38.1               
+[23] scuttle_1.20.0              SingleCellExperiment_1.32.0
+[25] SummarizedExperiment_1.40.0 Biobase_2.70.0             
+[27] GenomicRanges_1.62.1        Seqinfo_1.0.0              
+[29] IRanges_2.44.0              S4Vectors_0.48.1           
+[31] BiocGenerics_0.56.0         generics_0.1.4             
+[33] MatrixGenerics_1.22.0       matrixStats_1.5.0          
+[35] here_1.0.2                  workflowr_1.7.1            
+
+loaded via a namespace (and not attached):
+  [1] fs_1.6.6                 spatstat.sparse_3.1-0    bitops_1.0-9            
+  [4] httr_1.4.7               RColorBrewer_1.1-3       tools_4.5.0             
+  [7] sctransform_0.4.3        backports_1.5.1          DT_0.34.0               
+ [10] R6_2.6.1                 mgcv_1.9-1               lazyeval_0.2.3          
+ [13] uwot_0.2.4               withr_3.0.2              gridExtra_2.3           
+ [16] progressr_0.19.0         cli_3.6.5                spatstat.explore_3.8-0  
+ [19] fastDummies_1.7.5        labeling_0.4.3           sass_0.4.10             
+ [22] S7_0.2.1-1               spatstat.data_3.1-9      ggridges_0.5.7          
+ [25] pbapply_1.7-4            Rsamtools_2.26.0         parallelly_1.47.0       
+ [28] limma_3.66.0             rstudioapi_0.17.1        FNN_1.1.4.1             
+ [31] BiocIO_1.20.0            crosstalk_1.2.2          ica_1.0-3               
+ [34] spatstat.random_3.4-5    car_3.1-5                Matrix_1.7-3            
+ [37] ggbeeswarm_0.7.3         abind_1.4-8              lifecycle_1.0.5         
+ [40] whisker_0.4.1            yaml_2.3.10              edgeR_4.8.2             
+ [43] carData_3.0-6            SparseArray_1.10.10      Rtsne_0.17              
+ [46] grid_4.5.0               promises_1.5.0           dqrng_0.4.1             
+ [49] crayon_1.5.3             miniUI_0.1.2             lattice_0.22-6          
+ [52] beachmat_2.26.0          cowplot_1.2.0            cigarillo_1.0.0         
+ [55] pillar_1.11.1            knitr_1.50               metapod_1.18.0          
+ [58] rjson_0.2.23             xgboost_3.2.1.1          future.apply_1.20.2     
+ [61] codetools_0.2-20         glue_1.8.0               getPass_0.2-4           
+ [64] spatstat.univar_3.1-7    data.table_1.18.2.1      vctrs_0.7.3             
+ [67] png_0.1-9                spam_2.11-3              gtable_0.3.6            
+ [70] cachem_1.1.0             xfun_0.52                S4Arrays_1.10.1         
+ [73] mime_0.13                survival_3.8-3           statmod_1.5.1           
+ [76] bluster_1.20.0           fitdistrplus_1.2-6       ROCR_1.0-12             
+ [79] nlme_3.1-168             bit64_4.6.0-1            RcppAnnoy_0.0.23        
+ [82] GenomeInfoDb_1.46.2      rprojroot_2.1.1          bslib_0.9.0             
+ [85] irlba_2.3.7              vipor_0.4.7              KernSmooth_2.23-26      
+ [88] otel_0.2.0               tidyselect_1.2.1         processx_3.8.6          
+ [91] bit_4.6.0                curl_6.2.2               compiler_4.5.0          
+ [94] git2r_0.36.2             BiocNeighbors_2.4.0      hdf5r_1.3.12            
+ [97] DelayedArray_0.36.1      plotly_4.12.0            stringfish_0.18.0       
+[100] rtracklayer_1.70.1       lmtest_0.9-40            callr_3.7.6             
+[103] digest_0.6.37            goftest_1.2-3            spatstat.utils_3.2-2    
+[106] rmarkdown_2.29           XVector_0.50.0           htmltools_0.5.8.1       
+[109] pkgconfig_2.0.3          fastmap_1.2.0            rlang_1.2.0             
+[112] htmlwidgets_1.6.4        UCSC.utils_1.6.1         shiny_1.13.0            
+[115] farver_2.1.2             jquerylib_0.1.4          zoo_1.8-15              
+[118] jsonlite_2.0.0           BiocParallel_1.44.0      RCurl_1.98-1.18         
+[121] BiocSingular_1.26.1      magrittr_2.0.3           Formula_1.2-5           
+[124] dotCall64_1.2            Rcpp_1.0.14              viridis_0.6.5           
+[127] reticulate_1.46.0        stringi_1.8.7            MASS_7.3-65             
+[130] plyr_1.8.9               parallel_4.5.0           listenv_0.10.1          
+[133] ggrepel_0.9.8            deldir_2.0-4             Biostrings_2.78.0       
+[136] splines_4.5.0            tensor_1.5.1             hms_1.1.4               
+[139] locfit_1.5-9.12          ps_1.9.1                 igraph_2.2.3            
+[142] spatstat.geom_3.7-3      ggsignif_0.6.4           RcppHNSW_0.6.0          
+[145] reshape2_1.4.5           ScaledMatrix_1.18.0      XML_3.99-0.23           
+[148] evaluate_1.0.3           RcppParallel_5.1.11-2    renv_1.1.4              
+[151] BiocManager_1.30.27      tzdb_0.5.0               httpuv_1.6.16           
+[154] RANN_2.6.2               polyclip_1.10-7          scattermore_1.2         
+[157] rsvd_1.0.5               broom_1.0.12             xtable_1.8-8            
+[160] restfulr_0.0.16          RSpectra_0.16-2          rstatix_0.7.3           
+[163] later_1.4.2              viridisLite_0.4.3        GenomicAlignments_1.46.0
+[166] beeswarm_0.4.0           cluster_2.1.8.1          timechange_0.4.0        
+[169] globals_0.19.1          </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

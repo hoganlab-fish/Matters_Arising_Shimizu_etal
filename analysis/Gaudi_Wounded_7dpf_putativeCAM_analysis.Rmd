@@ -1,0 +1,330 @@
+---
+title: "GSE270486 Wounded dataset: putative CAM analysis"
+author: "Michelle Meier"
+date: "`r format(Sys.time(), '%d. %B %Y')`"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: inline
+---
+
+# Introduction
+
+The purpose of this analysis is to investigate the putatitive CAM population Shimizu et al have presented in their Matter Arising to Nature. 
+
+This is a dataset that we have made publicly available through our latest study [Convergent evolution of scavenger cell development at brain borders](https://www.nature.com/articles/s41586-025-10003-3) and we will be using the RDS object we provided for the Wounded 7dpf dataset (GSE270486).
+
+
+Important dataset specs:
+
+- Dev stage: 7dpf 
+
+- Tissue: Head
+
+- Sorting: kdrl, mCherry+ FACS (very leaky, lots of other cells)
+
+
+# Set-up
+
+## Load libraries
+
+```{r}
+suppressPackageStartupMessages({
+  library(here)
+  library(scran)
+  library(scater)
+  library(scuttle)
+  library(scales)
+  library(readr)
+  library(Seurat)
+  library(ggpubr)
+  library(tidyverse)
+  library(qs2)
+  library(patchwork)
+})
+
+```
+
+
+## Load data
+
+```{r}
+seurat <- qs_read(here("data/Level_01_D10026_Wounded.qs2"))
+
+```
+
+## Plotting themes
+
+```{r}
+plot_sizing <- theme_bw()+ theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "black"),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank()) 
+
+
+plot_sizing_seurat <- theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "black"),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14))
+
+rotate_x <- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+strip_fix <- theme(strip.background = element_rect(fill = "white"), 
+                   strip.text = element_text(size = 14))
+
+```
+
+## Colours 
+
+```{r}
+wounded_colours <- c(
+  "#dbe2c6", #wildtype
+  "#657c95" #wounded
+)
+
+names(wounded_colours) <- c("Control_kdrl", "Wounded_kdrl")
+
+seurat$Sample_Name <- factor(seurat$Sample_Name, levels = names(wounded_colours)) #wildtype always first
+```
+
+
+
+
+# Overview 
+
+## Cell type labels
+
+Show cell type labels:
+
+```{r, fig.align='center', fig.height=5, fig.width=8}
+
+DimPlot(seurat, label = T,repel=T) + ggtitle("Wounded: cell type labels")
+
+```
+
+## TBI status for cell types
+
+This dataset contains both wounded as well as control samples. Most of the immune cells actually come from the wounded sample.
+
+```{r, fig.align='center'}
+
+seurat@meta.data %>% 
+  group_by(L1_Predicted_phenotype, Sample_Name) %>% 
+  summarise(., count =n()) %>% 
+  ggplot(., aes(x = L1_Predicted_phenotype, y= count, fill=Sample_Name)) +
+  geom_bar(stat="identity", position = "fill") +
+  scale_fill_manual(values = wounded_colours) +
+  plot_sizing + rotate_x + xlab("") + 
+  ggtitle("Wounded composition per celltype")
+
+```
+Get absolute numbers for macrophages. Neutrophils are all wounded 
+
+```{r}
+
+seurat@meta.data %>% 
+  group_by(L1_Predicted_phenotype, Sample_Name) %>% 
+  summarise(., count = n()) %>% 
+  filter(., L1_Predicted_phenotype == "Macrophage")
+
+```
+
+
+
+# Subset to Immune cells
+
+## Write function for overview
+
+```{r}
+expression_colours <- c("#d9d9d9", "#40004b")
+colours_myeloid_celltypes <- c("grey", "black", "red")
+
+make_wounded_subfigures <- function(object, genes_to_plot=genes){ #title
+  p1 <- DimPlot(object, group.by = "myeloid_celltype", cols = colours_myeloid_celltypes) + NoAxes() + ggtitle("Myeloid populations (n=349)")
+  p2 <- DimPlot(object, group.by = "Sample_Name", cols = wounded_colours) + NoAxes() + ggtitle("Wounding status")
+  p3 <- DotPlot(object, features = genes_to_plot, group.by = "myeloid_celltype", cols = expression_colours) + rotate_x + ylab("") + ggtitle("Gene expression patterns") #change genes
+  p4 <- object@meta.data %>% 
+  group_by(myeloid_celltype, Sample_Name) %>% 
+  summarise(., count =n()) %>% 
+  ggplot(., aes(x = myeloid_celltype, y= count, fill=Sample_Name)) +
+  geom_bar(stat="identity", position = "stack") + 
+  scale_fill_manual(values = wounded_colours) +
+  geom_text(aes(label = count), 
+            position = position_stack(vjust=0.5),size=5, color="black",
+            )+
+  plot_sizing  + xlab("cluster")  +rotate_x + ggtitle("Wounded status composition")
+  
+  plot <- (p1+p2+plot_layout(ncol=2, axes="collect")) +p3+p4 & theme(plot.title = element_text(size = 18, face = "italic"))
+  
+  #  #add plotlayout
+  return(plot)
+  
+  
+}
+
+```
+
+## filter + reprocess
+
+```{r}
+seurat <- SetIdent(seurat, value = "L1_Predicted_phenotype")
+myeloid <- subset(seurat, idents = c("Macrophage", "Neutrophil"))
+myeloid
+
+# Github issue [here](https://github.com/satijalab/seurat/issues/6719) suggests that rerunning SCTransform actually is not necessarily required
+```
+They don't say that they've rescaled/re-run SCT.
+
+```{r}
+myeloid <- myeloid %>% 
+  RunPCA(., verbose = F) %>% 
+  FindNeighbors(dims = c(1:10), verbose = F) %>% 
+  FindClusters(resolution = 0.5, verbose = F) %>% 
+  RunUMAP(dims = c(1:10), verbose = F)
+
+```
+
+
+Make the two plots to see if we can roughly get their clustering structure + gene expression patterns. 
+
+```{r, fig.align='center', fig.width=12, fig.height=5}
+umap <- DimPlot(myeloid)
+
+#update genes
+genes <- c("apoc1", "apoeb", "p2ry12", "sall3a", #microglia
+           "csf1rb", "spi1a", "mpeg1.1", "marco", #shared
+           "cybb", "f13a1b", "cd74b", "tgfbi", #CAM
+            "lyve1a","lyve1b", "mrc1a","mrc1b" , "dab2", "stab1", "stab2" , #functional genes for BAM equivalence
+           "mpx", "mmp9", "lyz"#neutro
+           )
+
+dotplot <- DotPlot(myeloid, features = genes, group.by = "SCT_snn_res.0.5") + rotate_x
+
+umap + dotplot + plot_layout(widths = c(1,2))
+```
+
+Cluster 0,1 and 3 together would be microglia, cluster 2 would be putative "CAM" and cluster 4 neutrophils. 
+
+```{r}
+myeloid$SCT_snn_res.0.5 %>% table()
+```
+
+
+Adding cell type labels with n and making pretty plots. 
+
+```{r}
+myeloid$myeloid_celltype <- case_when(myeloid$SCT_snn_res.0.5 %in% c(0,1,3) ~ "MG\nn=252",
+                                      myeloid$SCT_snn_res.0.5 == 2 ~ "MG/Macro subpop\nn=70",
+                                      myeloid$SCT_snn_res.0.5 == 4 ~ "Neutrophil\nn=27")
+
+```
+
+
+```{r, fig.align='center', fig.height=8, fig.width=15, warning=FALSE}
+names(colours_myeloid_celltypes) <- c("MG\nn=252", "Neutrophil\nn=27", "MG/Macro subpop\nn=70")
+
+make_wounded_subfigures(myeloid) + plot_annotation(title = "Wounded dataset 7dpf (GSE270486)")
+```
+
+
+# For figure: individual panels
+
+Make individual panels for illustrator figure. This ensures we keep the same dimensions. We also tend to adjust things like text size in illustrator as its a bit easier. 
+
+## Functions 
+
+Write some core functions. 
+
+```{r}
+plot_umap <- function(seurat.object = myeloid,
+                      group, 
+                      title,
+                      save.dir = output,
+                      cols = NULL,
+                      project.name = name, 
+                      size = 10){
+  #with legend
+  umap <- DimPlot(seurat.object,
+                  group.by = group,
+                  cols = cols,
+                  shuffle = T, 
+                  pt.size = 1,
+                  label = F) + NoAxes() + ggtitle(title)
+  
+  umapFileName <- sprintf('%s/%s_umap_%s.pdf', save.dir, project.name, group)
+  ggsave(umapFileName,
+         umap,
+         device="pdf",
+         width=size,
+         height=size,
+         units="cm",
+         scale=1)
+  
+  #without legend
+  umap.nolegend <- umap + NoLegend() + NoAxes() + ggtitle('')
+  umapFileName <- sprintf('%s/%s_umap_%s_nolegend.pdf', save.dir, project.name, group)
+  ggsave(umapFileName,
+         umap.nolegend,
+         device="pdf",
+         width=size,
+         height=size,
+         units="cm",
+         scale=1)
+  
+  return(umap)
+}
+
+
+```
+
+## Make panels
+
+```{r}
+output <- here("output/figures/")
+name <- "Wounded_GSE270486"
+```
+
+
+```{r, fig.align='center', fig.height=8, fig.width=15, warning=FALSE}
+
+#use function
+p1 <- plot_umap(group = "myeloid_celltype", cols = colours_myeloid_celltypes, title = "Myeloid populations (n=349)")
+p2 <- plot_umap(group = "Sample_Name", cols = wounded_colours, title = "Wounding status")
+
+#dotplot
+p3 <- DotPlot(myeloid, features = genes, group.by = "myeloid_celltype", cols = expression_colours) + rotate_x + ylab("") + ggtitle("Gene expression patterns") 
+ggsave(sprintf("%s/%s_dotplot_myeloid_celltype.pdf", output, name),
+         p3,
+         device="pdf",
+         width=20,
+         height=10,
+         units="cm",
+         scale=1)
+
+#stacked barplot
+p4 <- myeloid@meta.data %>% 
+  group_by(myeloid_celltype, Sample_Name) %>% 
+  summarise(., count =n()) %>% 
+  ggplot(., aes(x = myeloid_celltype, y= count, fill=Sample_Name)) +
+  geom_bar(stat="identity", position = "stack") + 
+  scale_fill_manual(values = wounded_colours) +
+  geom_text(aes(label = count), 
+            position = position_stack(vjust=0.5),size=5, color="black")+
+  plot_sizing  + xlab("")  +rotate_x + ggtitle("Wounded status composition")
+ggsave(sprintf("%s/%s_stacked_barplot_myeloid_celltype_wounded.pdf", output, name),
+         p4,
+         device="pdf",
+         width=13,
+         height=10,
+         units="cm",
+         scale=1)
+
+  
+(p1+p2+plot_layout(ncol=2, axes="collect")) +p3+p4 
+```
+
+
+
+
+
+

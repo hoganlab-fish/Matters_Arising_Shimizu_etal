@@ -27,7 +27,7 @@ Important dataset specs:
 
 ## Load libraries
 
-```{r}
+```{r, warning=FALSE}
 suppressPackageStartupMessages({
   library(here)
   library(scran)
@@ -220,111 +220,13 @@ myeloid$myeloid_celltype <- case_when(myeloid$SCT_snn_res.0.5 %in% c(0,1,3) ~ "M
 ```
 
 
-```{r, fig.align='center', fig.height=8, fig.width=15, warning=FALSE}
-names(colours_myeloid_celltypes) <- c("MG\nn=252", "Neutrophil\nn=27", "MG/Macro subpop\nn=70")
+# Export 
 
-make_wounded_subfigures(myeloid) + plot_annotation(title = "Wounded dataset 7dpf (GSE270486)")
-```
-
-
-# For figure: individual panels
-
-Make individual panels for illustrator figure. This ensures we keep the same dimensions. We also tend to adjust things like text size in illustrator as its a bit easier. 
-
-## Functions 
-
-Write some core functions. 
+Let's save this! 
 
 ```{r}
-plot_umap <- function(seurat.object = myeloid,
-                      group, 
-                      title,
-                      save.dir = output,
-                      cols = NULL,
-                      project.name = name, 
-                      size = 10){
-  #with legend
-  umap <- DimPlot(seurat.object,
-                  group.by = group,
-                  cols = cols,
-                  shuffle = T, 
-                  pt.size = 1,
-                  label = F) + NoAxes() + ggtitle(title)
-  
-  umapFileName <- sprintf('%s/%s_umap_%s.pdf', save.dir, project.name, group)
-  ggsave(umapFileName,
-         umap,
-         device="pdf",
-         width=size,
-         height=size,
-         units="cm",
-         scale=1)
-  
-  #without legend
-  umap.nolegend <- umap + NoLegend() + NoAxes() + ggtitle('')
-  umapFileName <- sprintf('%s/%s_umap_%s_nolegend.pdf', save.dir, project.name, group)
-  ggsave(umapFileName,
-         umap.nolegend,
-         device="pdf",
-         width=size,
-         height=size,
-         units="cm",
-         scale=1)
-  
-  return(umap)
-}
-
-
+filename <- here("output/data/seurat_objects/Wounded_7dpf_Level_02_immuneCells.qs2")
+qs_save(object = myeloid, file = filename)
 ```
-
-## Make panels
-
-```{r}
-output <- here("output/figures/")
-name <- "Wounded_GSE270486"
-```
-
-
-```{r, fig.align='center', fig.height=8, fig.width=15, warning=FALSE}
-
-#use function
-p1 <- plot_umap(group = "myeloid_celltype", cols = colours_myeloid_celltypes, title = "Myeloid populations (n=349)")
-p2 <- plot_umap(group = "Sample_Name", cols = wounded_colours, title = "Wounding status")
-
-#dotplot
-p3 <- DotPlot(myeloid, features = genes, group.by = "myeloid_celltype", cols = expression_colours) + rotate_x + ylab("") + ggtitle("Gene expression patterns") 
-ggsave(sprintf("%s/%s_dotplot_myeloid_celltype.pdf", output, name),
-         p3,
-         device="pdf",
-         width=20,
-         height=10,
-         units="cm",
-         scale=1)
-
-#stacked barplot
-p4 <- myeloid@meta.data %>% 
-  group_by(myeloid_celltype, Sample_Name) %>% 
-  summarise(., count =n()) %>% 
-  ggplot(., aes(x = myeloid_celltype, y= count, fill=Sample_Name)) +
-  geom_bar(stat="identity", position = "stack") + 
-  scale_fill_manual(values = wounded_colours) +
-  geom_text(aes(label = count), 
-            position = position_stack(vjust=0.5),size=5, color="black")+
-  plot_sizing  + xlab("")  +rotate_x + ggtitle("Wounded status composition")
-ggsave(sprintf("%s/%s_stacked_barplot_myeloid_celltype_wounded.pdf", output, name),
-         p4,
-         device="pdf",
-         width=13,
-         height=10,
-         units="cm",
-         scale=1)
-
-  
-(p1+p2+plot_layout(ncol=2, axes="collect")) +p3+p4 
-```
-
-
-
-
 
 

@@ -211,7 +211,7 @@ ggsave(sprintf("%s/%s_dotplot_myeloid_celltype.pdf", output, name),
          p3,
          device="pdf",
          width=20,
-         height=10,
+         height=8,
          units="cm",
          scale=1)
 
@@ -247,7 +247,7 @@ names(celltype_colours) <- c("MG/Macro subpop\nn=941", "Neutrophil\nn=1651", "MG
 ```
 
 
-```{r, fig.align='center', fig.height=8, fig.width=18, eval=FALSE}
+```{r, fig.align='center', fig.height=8, fig.width=18}
 #use function
 p1 <- plot_umap(seurat.object = timecourse, 
                 group = "prelim_celltype", 
@@ -264,7 +264,7 @@ ggsave(sprintf("%s/%s_dotplot_myeloid_celltype.pdf", output, name),
          p3,
          device="pdf",
          width=20,
-         height=10,
+         height=8,
          units="cm",
          scale=1)
 
@@ -352,7 +352,7 @@ ggsave(sprintf("%s/%s_dotplot_MG_subpop.pdf", output, name_MG),
          p4,
          device="pdf",
          width=20,
-         height=10,
+         height=8,
          units="cm",
          scale=1)
 
@@ -386,10 +386,19 @@ ggsave(sprintf("%s/%s_dotplot_locationmarker.pdf", output, name_MG),
          units="cm",
          scale=1)
 
+#flipped
+p8 <- DotPlot(object = silva_MG, features = c("ctsa", "ctsba", "c1qa", "c1qc"), group.by = "celltype_subclusters", cols = expression_colours) + rotate_x + ggtitle("Location marker genes")  + coord_flip()
+ggsave(sprintf("%s/%s_dotplot_locationmarker_flipped.pdf", output, name_MG),
+         p8,
+         device="pdf",
+         width=13,
+         height=8,
+         units="cm",
+         scale=1)
+
 ```
 
 
-Make two figures
 
 ```{r, fig.align='center', fig.height=15, fig.width=15}
 

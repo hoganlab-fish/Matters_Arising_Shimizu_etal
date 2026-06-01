@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Michelle Meier" />
+
+
+<title>Silva et al 2021: mpeg1.1+ immune cells in juvenile/adult brains</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Matters_Arising_Shimizu_etal</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Silva et al 2021: mpeg1.1+ immune cells in
+juvenile/adult brains</h1>
+<h4 class="author">Michelle Meier</h4>
+<h4 class="date">01. June 2026</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-06-01
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong>
+<code>Matters_Arising_Shimizu_etal/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260420code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260420)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260420code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260420)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree74fdba885a3410b2c08426b530f2c5dd7d137758targetblank74fdba8a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/74fdba885a3410b2c08426b530f2c5dd7d137758" target="_blank">74fdba8</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree74fdba885a3410b2c08426b530f2c5dd7d137758targetblank74fdba8a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/74fdba885a3410b2c08426b530f2c5dd7d137758" target="_blank">74fdba8</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    output/.DS_Store
+
+Untracked files:
+    Untracked:  analysis/MakeFigures.Rmd
+    Untracked:  data/DR_ribosomal_globin_genes.csv
+    Untracked:  data/GeneralCellrangerOutputs
+    Untracked:  data/Level_01_D10026_Wounded.qs2
+    Untracked:  data/OT_HB_genesets.csv
+    Untracked:  output/data/
+    Untracked:  output/figures/
+    Untracked:  renv.lock
+    Untracked:  renv/
+
+Unstaged changes:
+    Modified:   .Rprofile
+    Modified:   _workflowr.yml
+    Modified:   analysis/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd
+    Modified:   analysis/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd</code>)
+and HTML
+(<code>docs/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.html</code>)
+files. If you’ve configured a remote Git repository (see
+<code>?wflow_git_remote</code>), click on the hyperlinks in the table
+below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/74fdba885a3410b2c08426b530f2c5dd7d137758/analysis/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd" target="_blank">74fdba8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+<td>
+wflow_publish("analysis/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd")
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The purpose of this analysis is to analyse a dataset that is
+specifically enriched for mpeg1.1+ cells in the zebrafish brain. Our lab
+is mostly interested in endothlial cells, so we tend to sort for them.
+Getting publicly available data from <a
+href="https://www.nature.com/articles/s41467-021-26206-x">this paper</a>
+where they sequence 2 juvenile and 1 adult zebrafish immune cells in the
+brain (CD45+ mpeg1.1+ FACS).</p>
+<p>I have download their filtered data they deposited on GEO (<a
+href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164772">GSE164772</a>).</p>
+<div id="load-libraries" class="section level2">
+<h2>Load libraries</h2>
+<pre class="r"><code>suppressPackageStartupMessages({
+  library(here)
+  library(scran)
+  library(scater)
+  library(scuttle)
+  library(scales)
+  library(readr)
+  library(Seurat)
+  library(ggpubr)
+  library(tidyverse)
+  library(qs2)
+  library(patchwork)
+  # library(DropletUtils)
+})</code></pre>
+<pre><code>Warning: package &#39;scran&#39; was built under R version 4.5.3</code></pre>
+<pre><code>Warning: package &#39;SingleCellExperiment&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;SummarizedExperiment&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;MatrixGenerics&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;GenomicRanges&#39; was built under R version 4.5.2</code></pre>
+<pre><code>Warning: package &#39;BiocGenerics&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;S4Vectors&#39; was built under R version 4.5.3</code></pre>
+<pre><code>Warning: package &#39;IRanges&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;Seqinfo&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;Biobase&#39; was built under R version 4.5.1</code></pre>
+<pre><code>Warning: package &#39;scuttle&#39; was built under R version 4.5.1</code></pre>
+</div>
+<div id="get-paths" class="section level2">
+<h2>get paths</h2>
+<pre class="r"><code>silva_path &lt;- here(&quot;data/GeneralCellrangerOutputs/Silva2021/GSE164772_sc_dr_Silva2021Counts.txt.gz&quot;)
+silva_meta_path &lt;- here(&quot;data/GeneralCellrangerOutputs/Silva2021/GSE164772_sc_dr_Silva2021_metadata.csv.gz&quot;)</code></pre>
+</div>
+<div id="plotting-themes" class="section level2">
+<h2>Plotting themes</h2>
+<pre class="r"><code>plot_sizing &lt;- theme_bw()+ theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = &quot;black&quot;),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank()) 
+
+
+plot_sizing_seurat &lt;- theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = &quot;black&quot;),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14))
+
+rotate_x &lt;- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+strip_fix &lt;- theme(strip.background = element_rect(fill = &quot;white&quot;), 
+                   strip.text = element_text(size = 14))</code></pre>
+</div>
+</div>
+<div id="generate-seurat-object" class="section level1">
+<h1>Generate seurat object</h1>
+<p>Taking their filtered data, no need for QC filtering.</p>
+<pre class="r"><code>counts &lt;- read.table(silva_path )
+
+meta &lt;- read_csv(silva_meta_path, show_col_types = F) %&gt;% 
+  column_to_rownames(&quot;...1&quot;)</code></pre>
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+<pre class="r"><code>Level_01_seuratObject &lt;- CreateSeuratObject(
+                                                    counts=counts, 
+                                                    meta.data = meta,
+                                                    min.cells = 5)</code></pre>
+<pre><code>Warning: Data is of class data.frame. Coercing to dgCMatrix.</code></pre>
+<pre class="r"><code>Level_01_seuratObject</code></pre>
+<pre><code>An object of class Seurat 
+18636 features across 9043 samples within 1 assay 
+Active assay: RNA (18636 features, 0 variable features)
+ 1 layer present: counts</code></pre>
+<p>Add % mito</p>
+<pre class="r"><code>Level_01_seuratObject$`percent.mt` &lt;- PercentageFeatureSet(Level_01_seuratObject, pattern = &quot;^[mtMtMT-]&quot;)</code></pre>
+</div>
+<div id="plot-qc-metrics" class="section level1">
+<h1>Plot QC metrics</h1>
+<pre class="r"><code>make_density_plots &lt;- function(seurat =Level_01_seuratObject, sample){
+  plot_list &lt;- list()
+
+  #ncount
+  p1 &lt;- ggplot(seurat@meta.data %&gt;% filter(., individual == sample), aes(x=log10(nCount_RNA))) + 
+    geom_histogram(aes(y=..density..), colour=&quot;black&quot;, fill=&quot;white&quot;)+
+    geom_density(alpha=.2, fill=&quot;#FF6666&quot;)+ xlab(&#39;log10(count)&#39;) +
+    plot_sizing + ggtitle(sprintf(&quot;Library size, %s&quot;, sample))
+  
+  #nfeat
+  p2 &lt;- ggplot(seurat@meta.data %&gt;% filter(., individual == sample), aes(x=log10(nFeature_RNA))) + 
+    geom_histogram(aes(y=..density..), colour=&quot;black&quot;, fill=&quot;white&quot;)+
+    geom_density(alpha=.2, fill=&quot;#FF6666&quot;)+ xlab(&#39;log10(nfeature)&#39;) +
+    plot_sizing + ggtitle(sprintf(&quot;#features, %s&quot;,  sample))
+  
+  #mito
+  p3 &lt;- ggplot(seurat@meta.data %&gt;% filter(., individual == sample), aes(x=percent.mt)) + 
+    geom_histogram(aes(y=..density..), colour=&quot;black&quot;, fill=&quot;white&quot;)+
+    geom_density(alpha=.2, fill=&quot;#FF6666&quot;)+ xlab(&#39;percent.mt&#39;) +
+    plot_sizing + ggtitle(sprintf(&quot;mito, %s&quot;,  sample))
+  
+  return(p1+p2+p3)
+  
+}
+
+make_correlation_plots &lt;- function(seurat =Level_01_seuratObject, sample){
+  plot_list &lt;- list()
+
+  meta &lt;- seurat@meta.data %&gt;% 
+    filter(.,  individual == sample) %&gt;% 
+    mutate(., log10ncount = log10(nCount_RNA),
+              log10nfeat = log10(nFeature_RNA))
+  
+  #ncount
+  p1 &lt;- ggscatter(meta, x = &quot;log10ncount&quot;, y = &quot;log10nfeat&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;log10(#features)&quot;) + xlab(&quot;log10(nCount)&quot;) +
+    stat_cor(method = &quot;pearson&quot;, label.x = 3, label.y = 4, size = 5) +
+    ggtitle(sprintf(&quot;Lib size vs #features, %s&quot;, sample))
+  
+  #nfeat
+  p2 &lt;- ggscatter(meta, x = &quot;log10ncount&quot;, y = &quot;percent.mt&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;%mito&quot;) + xlab(&quot;log10(nCount)&quot;) +
+    stat_cor(method = &quot;pearson&quot;, label.x = 3, label.y = 80, size = 5) +
+    ggtitle(sprintf(&quot;Lib size vs mito, %s&quot;,  sample))
+  
+  #mito
+  p3 &lt;- ggscatter(meta, x = &quot;log10nfeat&quot;, y = &quot;percent.mt&quot;,
+          add = &quot;reg.line&quot;,                                 
+          conf.int = TRUE,                                
+          add.params = list(color = &quot;red4&quot;,
+                            fill = &quot;lightgray&quot;)) +
+    plot_sizing + ylab(&quot;%mito&quot;) + xlab(&quot;log10(#features)&quot;) +
+    stat_cor(method = &quot;pearson&quot;, label.x = 2.6, label.y = 80, size = 5) +
+    ggtitle(sprintf(&quot;#features vs mito, %s&quot;,  sample))
+  
+  return(p1+p2+p3)
+  
+}</code></pre>
+<div id="lib-size-nfeatures-mito" class="section level2">
+<h2>Lib size, nfeatures, %mito</h2>
+<pre class="r"><code>plot_list &lt;- lapply(Level_01_seuratObject$individual %&gt;% unique(), function(S) make_density_plots(sample=S))
+
+wrap_plots(plot_list, ncol=1) + plot_layout(axis_titles = &quot;collect&quot;)</code></pre>
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="correlations" class="section level2">
+<h2>Correlations</h2>
+<pre class="r"><code>plot_list &lt;- lapply(Level_01_seuratObject$individual %&gt;% unique(), function(S) make_correlation_plots(sample=S))
+
+wrap_plots(plot_list, ncol=1) + plot_layout(axis_titles = &quot;collect&quot;)</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-8-1.png" width="1440" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="subset-to-juvenile-only" class="section level1">
+<h1>Subset to juvenile only</h1>
+<p>Only looking at juvenile samples</p>
+<pre class="r"><code>cells_to_keep &lt;- Level_01_seuratObject@meta.data %&gt;% 
+  filter(.,age==&quot;Juvenile&quot;) %&gt;% 
+  rownames()
+
+juvenile_only &lt;- subset(Level_01_seuratObject, cells = cells_to_keep)</code></pre>
+<div id="process-object-juvenile" class="section level2">
+<h2>Process object (juvenile)</h2>
+<p>Using what they provide in the methods setion of their paper. Though
+skipping regressing out for now.</p>
+<pre class="r"><code>juvenile_only &lt;- NormalizeData(object = juvenile_only, scale.factor = 10000, verbose=F) %&gt;% 
+    FindVariableFeatures(., nfeatures = 6000, verbose=F) %&gt;% 
+  ScaleData(., vars.to.regress = &quot;nFeature_RNA&quot;, verbose=F) %&gt;%
+  RunPCA(., verbose=F) %&gt;% 
+  FindNeighbors(., dims = 1:30, verbose=F) %&gt;% 
+  FindClusters(., resolution = seq(0.1,1,0.1), verbose=F) %&gt;% 
+  RunUMAP(., dims = 1:30, verbose=F)</code></pre>
+<pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
+To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
+This message will be shown once per session</code></pre>
+</div>
+<div id="inspect-dataset-juvenile" class="section level2">
+<h2>Inspect dataset (juvenile)</h2>
+<p>The Jclusters/JMclusters are their clusters!</p>
+<pre class="r"><code>p1 &lt;- DimPlot(object = juvenile_only, group.by = &quot;individual&quot;, shuffle = T)
+p2 &lt;- FeaturePlot(object = juvenile_only, feature = &quot;nCount_RNA&quot;)
+p3 &lt;- FeaturePlot(object = juvenile_only, feature = &quot;nFeature_RNA&quot;)
+p4 &lt;- FeaturePlot(object = juvenile_only, feature = &quot;percent.mt&quot;)
+p5 &lt;- FeaturePlot(object = juvenile_only, feature = &quot;mpeg1.1&quot;)
+p6 &lt;- DimPlot(object = juvenile_only, group.by = &quot;Jclusters&quot;, shuffle = T, label = T) + theme(legend.position = &quot;none&quot;)
+p7 &lt;- DimPlot(object = juvenile_only, group.by = &quot;JMclusters&quot;, shuffle = T, label = T) + theme(legend.position = &quot;none&quot;)
+ 
+p1+p2+p3+p4+p5+p6+p7</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-11-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p>Looks like they did not subset J02 - maybe due to QC concerns?</p>
+<p>Add QC metrics boxplots.</p>
+<pre class="r"><code>plot_list &lt;- list()
+
+plot_list[[1]] &lt;- juvenile_only@meta.data %&gt;% 
+  ggplot(., aes(y = log10(nCount_RNA), x = Jclusters, fill=Jclusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = &quot;none&quot;) + ggtitle(&quot;Library size&quot;)
+
+plot_list[[2]] &lt;- juvenile_only@meta.data %&gt;% 
+  ggplot(., aes(y = log10(nFeature_RNA), x = Jclusters, fill=Jclusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = &quot;none&quot;) + ggtitle(&quot;#genes&quot;)
+
+plot_list[[3]] &lt;- juvenile_only@meta.data %&gt;% 
+  ggplot(., aes(y = percent.mt, x = Jclusters, fill=Jclusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = &quot;none&quot;) + ggtitle(&quot;%mito&quot;)
+
+wrap_plots(plot_list, axes = &quot;collect&quot;, ncol=2)</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-12-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p>J02 is likely low quality cells.</p>
+<p>Make immune cells dotplot.</p>
+<pre class="r"><code>genes_immune_annotation &lt;- c(&quot;pcna&quot;, &quot;mki67&quot;, &quot;top2a&quot;, #prolif
+                             &quot;apoc1&quot;, &quot;apoeb&quot;, &quot;slco2b1&quot;, &quot;sall3a&quot;, &quot;p2ry12&quot;, &quot;tgfbr1b&quot;, &quot;slc2a5&quot;, #MG
+                              &quot;mpeg1.1&quot;,&quot;csf1ra&quot;, &quot;csf1rb&quot;, #shared MG + CAM
+                             &quot;c1qa&quot;, &quot;cybb&quot;, &quot;marco&quot;, &quot;f13a1b&quot;, &quot;anxa5b&quot;, &quot;nampta&quot;, &quot;pla2g7&quot;, &quot;tgfb1&quot;, &quot;lyve1b&quot;, #CAM
+                            &quot;xcr1a.1&quot;, &quot;flt3&quot;, &quot;batf3&quot;, #DC
+                            &quot;cd79a&quot;, &quot;cd79b&quot;, &quot;pax5&quot;, #Bcell
+                            &quot;gzm3.3&quot;, &quot;il2rb&quot;, &quot;ccl38.6&quot;, #NK
+                            &quot;zap70&quot;, &quot;lck&quot;, &quot;il7r&quot;, #Tcell
+                            &quot;tbx21&quot;, &quot;runx3&quot;, #ILC1
+                            &quot;il4&quot;, &quot;gata3&quot;, &quot;il13&quot; #ILC2
+                            )</code></pre>
+<pre class="r"><code>DotPlot(object = juvenile_only, features = genes_immune_annotation, group.by = &quot;Jclusters&quot;) + rotate_x</code></pre>
+<pre><code>Warning: The following requested variables were not found: tgfb1, cd79a</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-14-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="annotate-juvenile" class="section level2">
+<h2>Annotate (juvenile)</h2>
+<pre class="r"><code>juvenile_only$celltype &lt;- case_when(juvenile_only$Jclusters %in% c(&quot;J0&quot;, &quot;J12&quot;) ~ &quot;MG&quot;,
+                                    juvenile_only$Jclusters == &quot;J05&quot; ~ &quot;CAM&quot;,
+                                    juvenile_only$Jclusters == &quot;J06&quot; ~ &quot;prolif MG&quot;,
+                                    juvenile_only$Jclusters %in% c(&quot;J01&quot;, &quot;J14&quot;) ~ &quot;NK cells&quot;,
+                                    juvenile_only$Jclusters == &quot;J04&quot; ~ &quot;T cells&quot; ,
+                                    juvenile_only$Jclusters == &quot;J03&quot; ~ &quot;DC&quot; ,
+                                    juvenile_only$Jclusters == &quot;J10&quot; ~ &quot;prolif immune&quot;,
+                                    juvenile_only$Jclusters == &quot;J08&quot; ~ &quot;ILC1&quot;,
+                                    juvenile_only$Jclusters == &quot;J11&quot; ~ &quot;ILC2&quot;, 
+                                    juvenile_only$Jclusters ==  &quot;J02&quot;  ~ &quot;low quality&quot;,
+                                    juvenile_only$Jclusters %in% c(&quot;J07&quot;, &quot;J09&quot;, &quot;J13&quot;, &quot;J15&quot;) ~ &quot;unknown&quot;)
+
+juvenile_only$celltype &lt;- factor(juvenile_only$celltype, levels = rev(c(&quot;prolif MG&quot;, &quot;MG&quot;, &quot;CAM&quot;, &quot;prolif immune&quot;,&quot;DC&quot;, &quot;NK cells&quot;, &quot;T cells&quot;, &quot;ILC1&quot;, &quot;ILC2&quot;,&quot;low quality&quot;, &quot;unknown&quot;)))</code></pre>
+<p>Remake dotplot</p>
+<pre class="r"><code>DotPlot(object = juvenile_only, features = genes_immune_annotation, group.by = &quot;celltype&quot;) + rotate_x</code></pre>
+<pre><code>Warning: The following requested variables were not found: tgfb1, cd79a</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-16-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>celltype_colours &lt;- rev(c(&quot;#544D51&quot;, 
+                      &quot;#D3CFD4&quot;, 
+                      &quot;#EB2C23&quot;, 
+                      &quot;#c3d5f7&quot;,
+                      &quot;#3876E6&quot;,
+                      &quot;#D667F8&quot;,
+                      &quot;#36BDBA&quot;,
+                      &quot;#F19D36&quot;, 
+                      &quot;#B5136D&quot;, 
+                      &quot;beige&quot;, 
+                      &quot;bisque1&quot;))
+names(celltype_colours) &lt;- levels(juvenile_only$celltype)</code></pre>
+<pre class="r"><code>DimPlot(object = juvenile_only, group.by = &quot;celltype&quot;, cols=celltype_colours, shuffle = T)</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Combine</p>
+<pre class="r"><code>p1 &lt;- DotPlot(object = juvenile_only, features = genes_immune_annotation, group.by = &quot;celltype&quot;) + rotate_x</code></pre>
+<pre><code>Warning: The following requested variables were not found: tgfb1, cd79a</code></pre>
+<pre class="r"><code>p2 &lt;- DimPlot(object = juvenile_only, group.by = &quot;celltype&quot;, cols=celltype_colours, shuffle = T, label = T)
+
+p2 + p1 + plot_layout(widths = c(1, 2))</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-19-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>So they seem to pick the DC (JM3) cluster as well, calling it
+macrophages.. They clearly express the genes used to label DC in the MA,
+but they do express mpeg1.1 quite highly. In the original paper, they
+also use ccl19a.1</p>
+<pre class="r"><code>FeaturePlot(object = juvenile_only, features = &quot;ccl19a.1&quot;)</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-20-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>I actually can’t find any immediate proof that that gene is a
+macrophage marker, everything points to DC..</p>
+<p><a href="https://elifesciences.org/articles/91427">This paper</a>
+shows that DCs do in fact express mpeg1.1 as well. This also has adult
+zebrafish brain sequencing, but its only CD45+ FACS. They also have a
+violin plot showing that ccl19a.1 marks DC…</p>
+</div>
+</div>
+<div id="subset-to-putative-cammg-juvenile-reprocess"
+class="section level1">
+<h1>subset to putative CAM/MG (juvenile) + reprocess</h1>
+<pre class="r"><code>cells_to_keep &lt;- juvenile_only@meta.data %&gt;% 
+  filter(.,celltype %in% c(&quot;CAM&quot;, &quot;MG&quot;, &quot;prolif MG&quot;)) %&gt;% 
+  rownames()
+
+CAM_MG_only &lt;- subset(juvenile_only, cells = cells_to_keep)
+
+CAM_MG_only &lt;- NormalizeData(object = CAM_MG_only, scale.factor = 10000, verbose=F) %&gt;% 
+    FindVariableFeatures(., nfeatures = 6000, verbose=F) %&gt;% 
+  ScaleData(., vars.to.regress = &quot;nFeature_RNA&quot;, verbose=F) %&gt;%
+  # ScaleData(., verbose=F) %&gt;% 
+  RunPCA(., verbose=F) %&gt;% 
+  FindNeighbors(., dims = 1:30, verbose=F) %&gt;% 
+  FindClusters(., resolution = seq(0.1,1,0.1), verbose=F) %&gt;% 
+  RunUMAP(., dims = 1:30, verbose=F)</code></pre>
+<pre><code>Warning: Different features in new layer data than already exists for
+scale.data</code></pre>
+<div id="inspect-dataset-juvenile-cammg-only" class="section level2">
+<h2>Inspect dataset (juvenile, CAM/MG only)</h2>
+<pre class="r"><code>p1 &lt;- DimPlot(object = CAM_MG_only, group.by = &quot;individual&quot;, shuffle = T)
+p2 &lt;- FeaturePlot(object = CAM_MG_only, feature = &quot;nCount_RNA&quot;)
+p3 &lt;- FeaturePlot(object = CAM_MG_only, feature = &quot;nFeature_RNA&quot;)
+p4 &lt;- FeaturePlot(object = CAM_MG_only, feature = &quot;f13a1b&quot;)
+p5 &lt;- DimPlot(object = CAM_MG_only, group.by = &quot;JMclusters&quot;, shuffle = T, label = T) + theme(legend.position = &quot;none&quot;)  
+p6 &lt;- DimPlot(object = CAM_MG_only, group.by = &quot;Jclusters&quot;, shuffle = T, label = T) + theme(legend.position = &quot;none&quot;)  
+p7 &lt;- DimPlot(object = CAM_MG_only, group.by = &quot;celltype&quot;, shuffle = T, cols = celltype_colours)  
+ 
+p1+p2+p3+p4+p5+p6+p7</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-22-1.png" width="1440" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="compute-region-specific-signatures-scores---putative-cammg"
+class="section level1">
+<h1>Compute region specific signatures scores - putative CAM/MG</h1>
+<p>So the paper where this data is from, they claim to discover
+spatially different microglia they call NAM and SAM. As we’re using
+their clusters, I can directly link them here..</p>
+<p>JM1 (maps to one of our MG cluster) -&gt; NAMs (Optic tectum
+genes)</p>
+<p>JM4 (maps to our CAM cluster) -&gt; SAMs (Hind brain genes)</p>
+<p>They use their own bulk RNA-seq to derive region specific signatures,
+I’ve downloaded the data and replicated it.</p>
+<p>The filters they used were:</p>
+<p>adj. p &lt; 0.05, log2 fold change &gt;1.2, basemean &gt;100</p>
+<p>PercentageFeatureSet was used to determine a signature. We will add
+the module score as well.</p>
+<pre class="r"><code>bulk_signatures &lt;- read_csv(here(&quot;data/OT_HB_genesets.csv&quot;), show_col_types = F)
+
+HB &lt;- bulk_signatures %&gt;% 
+  filter(., baseMean &gt; 100 &amp; log2FoldChange &gt; 1.2 &amp; padj &lt; 0.05) %&gt;% 
+  pull(Gene_ID)
+
+OT &lt;- bulk_signatures %&gt;% 
+  filter(., baseMean &gt; 100 &amp; log2FoldChange &lt; -1.2 &amp; padj &lt; 0.05) %&gt;% 
+  pull(Gene_ID)
+
+CAM_MG_only$percent_HB &lt;- PercentageFeatureSet(object = CAM_MG_only, features = HB) </code></pre>
+<pre><code>Warning in PercentageFeatureSet(object = CAM_MG_only, features = HB): The
+following features are not found in the &#39;RNA&#39; assay: &#39;NA&#39;, &#39;cx47.1&#39;,
+&#39;si:ch211-14a11.5&#39;, &#39;dennd2b&#39;, &#39;si:busm1-71b9.3&#39;, &#39;si:cabz01069020.1&#39;, &#39;h2ax&#39;,
+&#39;si:dkey-242k1.4&#39;, &#39;si:ch211-113a14.17&#39;, &#39;LOC795887&#39;, &#39;zwi&#39;, &#39;ccl33.3&#39;,
+&#39;LOC100535167&#39;</code></pre>
+<pre class="r"><code>CAM_MG_only &lt;- AddModuleScore(object = CAM_MG_only,features = list(HB), name = &quot;module_score_HB_&quot;) </code></pre>
+<pre><code>Warning: The following features are not present in the object: NA, cx47.1,
+si:ch211-14a11.5, dennd2b, si:busm1-71b9.3, si:cabz01069020.1, h2ax,
+si:dkey-242k1.4, si:ch211-113a14.17, LOC795887, zwi, ccl33.3, LOC100535167, not
+searching for symbol synonyms</code></pre>
+<pre class="r"><code>CAM_MG_only$percent_OT &lt;- PercentageFeatureSet(object = CAM_MG_only, features = OT) </code></pre>
+<pre><code>Warning in PercentageFeatureSet(object = CAM_MG_only, features = OT): The
+following features are not found in the &#39;RNA&#39; assay: &#39;NA&#39;, &#39;LOC101885164&#39;,
+&#39;LOC101884623&#39;, &#39;LOC100150296&#39;, &#39;si:ch211-157e21.2&#39;, &#39;mdh1ab&#39;, &#39;shfl&#39;</code></pre>
+<pre class="r"><code>CAM_MG_only &lt;- AddModuleScore(object = CAM_MG_only,features = list(OT), name = &quot;module_score_OT_&quot;) </code></pre>
+<pre><code>Warning: The following features are not present in the object: NA,
+LOC101885164, LOC101884623, LOC100150296, si:ch211-157e21.2, mdh1ab, shfl, not
+searching for symbol synonyms</code></pre>
+<p>Look at violin plots.</p>
+<pre class="r"><code>p1 &lt;- CAM_MG_only@meta.data %&gt;% 
+  pivot_longer(., cols = c(&quot;JMclusters&quot;, &quot;celltype&quot;), names_to = &quot;cluster_name&quot;, values_to = &quot;cluster&quot;) %&gt;% 
+  ggplot(., aes(y = percent_OT, x = cluster, fill = cluster))+
+  geom_violin() +
+  facet_wrap(~cluster_name, scales=&quot;free&quot;) + plot_sizing+ strip_fix + ggtitle(&quot;Optic tectum signature [%]&quot;) + theme(legend.position = &quot;none&quot;)
+
+p2 &lt;- CAM_MG_only@meta.data %&gt;% 
+  pivot_longer(., cols = c(&quot;JMclusters&quot;, &quot;celltype&quot;), names_to = &quot;cluster_name&quot;, values_to = &quot;cluster&quot;) %&gt;% 
+  ggplot(., aes(y = percent_HB, x = cluster, fill = cluster))+
+  geom_violin() +
+  facet_wrap(~cluster_name, scales=&quot;free&quot;) + plot_sizing+ strip_fix + ggtitle(&quot;Hindbrain signature [%]&quot;) + theme(legend.position = &quot;none&quot;)
+
+p1+p2 + plot_layout(ncol = 1)</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>What about the module score?</p>
+<pre class="r"><code>p1 &lt;- CAM_MG_only@meta.data %&gt;% 
+  pivot_longer(., cols = c(&quot;JMclusters&quot;, &quot;celltype&quot;), names_to = &quot;cluster_name&quot;, values_to = &quot;cluster&quot;) %&gt;% 
+  ggplot(., aes(y = module_score_OT_1, x = cluster, fill = cluster))+
+  geom_violin() +
+  facet_wrap(~cluster_name, scales=&quot;free&quot;) + plot_sizing+ strip_fix + ggtitle(&quot;Optic tectum signature [enrichment]&quot;) + theme(legend.position = &quot;none&quot;)
+
+p2 &lt;- CAM_MG_only@meta.data %&gt;% 
+  pivot_longer(., cols = c(&quot;JMclusters&quot;, &quot;celltype&quot;), names_to = &quot;cluster_name&quot;, values_to = &quot;cluster&quot;) %&gt;% 
+  ggplot(., aes(y = module_score_HB_1, x = cluster, fill = cluster))+
+  geom_violin() +
+  facet_wrap(~cluster_name, scales=&quot;free&quot;) + plot_sizing+ strip_fix + ggtitle(&quot;Hindbrain signature [enrichment]&quot;) + theme(legend.position = &quot;none&quot;)
+
+p1+p2 + plot_layout(ncol = 1)</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Okay, we probably want to move away from just the JM cluster and add
+our own subclusters.</p>
+<pre class="r"><code>DimPlot(object = CAM_MG_only, group.by = &quot;RNA_snn_res.0.2&quot;, label = T)</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-26-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>CAM_MG_only$celltype_subclusters &lt;- case_when(CAM_MG_only$RNA_snn_res.0.2 == 0 ~ &quot;MG_1&quot;, 
+                                              CAM_MG_only$RNA_snn_res.0.2 == 1 ~ &quot;MG_2&quot;,
+                                              CAM_MG_only$RNA_snn_res.0.2 == 2 ~ &quot;CAM&quot;,
+                                              CAM_MG_only$RNA_snn_res.0.2 == 3 ~ &quot;prolif MG&quot;,
+                                              CAM_MG_only$RNA_snn_res.0.2 == 4 ~ &quot;MG_3&quot;,)
+
+
+colours_celltype_subclusters &lt;- c(&quot;#EB2C23&quot;, &quot;#544D51&quot;, &quot;grey90&quot;, &quot;grey70&quot;, &quot;grey45&quot;)
+names(colours_celltype_subclusters) &lt;- c(&quot;CAM&quot;, &quot;prolif MG&quot;, &quot;MG_1&quot;, &quot;MG_2&quot;, &quot;MG_3&quot;)</code></pre>
+<p>Make boxplots instead</p>
+<pre class="r"><code>CAM_MG_only@meta.data %&gt;% 
+  pivot_longer(., cols = c(&quot;module_score_OT_1&quot;, &quot;module_score_HB_1&quot;), names_to = &quot;score_name&quot;, values_to = &quot;score&quot;) %&gt;% 
+  ggplot(., aes(y = score, x = celltype_subclusters, fill = celltype_subclusters))+
+  geom_boxplot(outlier.size = 0.5) +
+  geom_jitter( size=0.01, alpha=0.3)+
+  geom_hline(yintercept = 0, linewidth=0.8)+
+  scale_fill_manual(values = colours_celltype_subclusters) +
+  facet_wrap(~score_name, scales=&quot;free_y&quot;, ncol=1) + plot_sizing+ strip_fix + theme(legend.position = &quot;none&quot;) + xlab(&quot;&quot;)</code></pre>
+<p><img src="figure/Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.Rmd/unnamed-chunk-28-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="export" class="section level1">
+<h1>Export</h1>
+<pre class="r"><code>filename &lt;- here(&quot;output/data/seurat_objects/Silva2021_28dpf_AllImmuneCells_juvenile.qs2&quot;)
+qs_save(object = juvenile_only, file = filename)
+
+filename &lt;- here(&quot;output/data/seurat_objects/Silva2021_28dpf_CAM_MGonly_juvenile.qs2&quot;)
+qs_save(object = CAM_MG_only, file = filename)</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.5.0 (2025-04-11)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.7.4
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Australia/Melbourne
+tzcode source: internal
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices datasets  utils     methods  
+[8] base     
+
+other attached packages:
+ [1] future_1.70.0               patchwork_1.3.2            
+ [3] qs2_0.1.7                   lubridate_1.9.5            
+ [5] forcats_1.0.1               stringr_1.5.1              
+ [7] dplyr_1.2.1                 purrr_1.2.2                
+ [9] tidyr_1.3.2                 tibble_3.3.1               
+[11] tidyverse_2.0.0             ggpubr_0.6.3               
+[13] Seurat_5.4.0                SeuratObject_5.4.0         
+[15] sp_2.2-1                    readr_2.2.0                
+[17] scales_1.4.0                scater_1.38.1              
+[19] ggplot2_4.0.2               scran_1.38.1               
+[21] scuttle_1.20.0              SingleCellExperiment_1.32.0
+[23] SummarizedExperiment_1.40.0 Biobase_2.70.0             
+[25] GenomicRanges_1.62.1        Seqinfo_1.0.0              
+[27] IRanges_2.44.0              S4Vectors_0.48.1           
+[29] BiocGenerics_0.56.0         generics_0.1.4             
+[31] MatrixGenerics_1.22.0       matrixStats_1.5.0          
+[33] here_1.0.2                  workflowr_1.7.1            
+
+loaded via a namespace (and not attached):
+  [1] RcppAnnoy_0.0.23       splines_4.5.0          later_1.4.2           
+  [4] polyclip_1.10-7        fastDummies_1.7.5      lifecycle_1.0.5       
+  [7] rstatix_0.7.3          edgeR_4.8.2            rprojroot_2.1.1       
+ [10] vroom_1.7.1            globals_0.19.1         processx_3.8.6        
+ [13] lattice_0.22-6         MASS_7.3-65            backports_1.5.1       
+ [16] magrittr_2.0.3         limma_3.66.0           plotly_4.12.0         
+ [19] sass_0.4.10            rmarkdown_2.29         jquerylib_0.1.4       
+ [22] yaml_2.3.10            metapod_1.18.0         httpuv_1.6.16         
+ [25] otel_0.2.0             sctransform_0.4.3      spam_2.11-3           
+ [28] spatstat.sparse_3.1-0  reticulate_1.46.0      cowplot_1.2.0         
+ [31] pbapply_1.7-4          RColorBrewer_1.1-3     abind_1.4-8           
+ [34] Rtsne_0.17             git2r_0.36.2           ggrepel_0.9.8         
+ [37] irlba_2.3.7            spatstat.utils_3.2-2   listenv_0.10.1        
+ [40] goftest_1.2-3          RSpectra_0.16-2        spatstat.random_3.4-5 
+ [43] dqrng_0.4.1            fitdistrplus_1.2-6     parallelly_1.47.0     
+ [46] codetools_0.2-20       DelayedArray_0.36.1    tidyselect_1.2.1      
+ [49] farver_2.1.2           ScaledMatrix_1.18.0    viridis_0.6.5         
+ [52] spatstat.explore_3.8-0 jsonlite_2.0.0         BiocNeighbors_2.4.0   
+ [55] Formula_1.2-5          progressr_0.19.0       ggridges_0.5.7        
+ [58] survival_3.8-3         tools_4.5.0            ica_1.0-3             
+ [61] Rcpp_1.0.14            glue_1.8.0             gridExtra_2.3         
+ [64] SparseArray_1.10.10    mgcv_1.9-1             xfun_0.52             
+ [67] withr_3.0.2            BiocManager_1.30.27    fastmap_1.2.0         
+ [70] bluster_1.20.0         callr_3.7.6            digest_0.6.37         
+ [73] rsvd_1.0.5             timechange_0.4.0       R6_2.6.1              
+ [76] mime_0.13              scattermore_1.2        tensor_1.5.1          
+ [79] spatstat.data_3.1-9    renv_1.1.4             data.table_1.18.2.1   
+ [82] httr_1.4.7             htmlwidgets_1.6.4      S4Arrays_1.10.1       
+ [85] whisker_0.4.1          uwot_0.2.4             pkgconfig_2.0.3       
+ [88] gtable_0.3.6           lmtest_0.9-40          S7_0.2.1-1            
+ [91] XVector_0.50.0         htmltools_0.5.8.1      carData_3.0-6         
+ [94] dotCall64_1.2          png_0.1-9              spatstat.univar_3.1-7 
+ [97] knitr_1.50             rstudioapi_0.17.1      tzdb_0.5.0            
+[100] reshape2_1.4.5         nlme_3.1-168           cachem_1.1.0          
+[103] zoo_1.8-15             KernSmooth_2.23-26     parallel_4.5.0        
+[106] miniUI_0.1.2           vipor_0.4.7            pillar_1.11.1         
+[109] grid_4.5.0             vctrs_0.7.3            RANN_2.6.2            
+[112] promises_1.5.0         stringfish_0.18.0      car_3.1-5             
+[115] BiocSingular_1.26.1    beachmat_2.26.0        xtable_1.8-8          
+[118] cluster_2.1.8.1        beeswarm_0.4.0         evaluate_1.0.3        
+[121] cli_3.6.5              locfit_1.5-9.12        compiler_4.5.0        
+[124] crayon_1.5.3           rlang_1.2.0            ggsignif_0.6.4        
+[127] future.apply_1.20.2    labeling_0.4.3         ps_1.9.1              
+[130] getPass_0.2-4          plyr_1.8.9             fs_1.6.6              
+[133] ggbeeswarm_0.7.3       stringi_1.8.7          deldir_2.0-4          
+[136] viridisLite_0.4.3      BiocParallel_1.44.0    lazyeval_0.2.3        
+[139] spatstat.geom_3.7-3    Matrix_1.7-3           RcppHNSW_0.6.0        
+[142] hms_1.1.4              bit64_4.6.0-1          statmod_1.5.1         
+[145] shiny_1.13.0           ROCR_1.0-12            broom_1.0.12          
+[148] igraph_2.2.3           RcppParallel_5.1.11-2  bslib_0.9.0           
+[151] bit_4.6.0             </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

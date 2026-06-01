@@ -16,6 +16,8 @@ This website contains all the code used to generate the findings discussed in ou
 
 [Generate panels for figure](MakeFigures.html) - this markdown contains the code used to generate all the panels that went into the figure. Some text edits were made in illustrator. 
 
+The exported pdf files can be found in `output/figures/`
+
 
 # Processing of datasets 
 
@@ -29,7 +31,7 @@ This website contains all the code used to generate the findings discussed in ou
 
 # Reproducability 
 
-All analysis was performed in R version 4.5.0 and package versions are tracked in renv.lock. If you wish to reproduce these findings, please make sure to download the provided data files from [zenodo]() and place then in the data or output/data folders. 
+All analysis was performed in R version 4.5.0 and package versions are tracked in renv.lock. If you wish to reproduce these findings, please make sure to download the provided data files from [zenodo]() and place then in the `data` or `output/data` folders. 
 
 
 

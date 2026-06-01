@@ -1,0 +1,516 @@
+---
+title: "Silva et al 2021: mpeg1.1+ immune cells in juvenile/adult brains"
+author: "Michelle Meier"
+date: "`r format(Sys.time(), '%d. %B %Y')`"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: inline
+---
+
+# Introduction
+
+The purpose of this analysis is to analyse a dataset that is specifically enriched for mpeg1.1+ cells in the zebrafish brain. Our lab is mostly interested in endothlial cells, so we tend to sort for them. Getting publicly available data from [this paper](https://www.nature.com/articles/s41467-021-26206-x) where they sequence 2 juvenile and 1 adult zebrafish immune cells in the brain (CD45+ mpeg1.1+ FACS). 
+
+I have download their filtered data they deposited on GEO ([GSE164772](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164772)). 
+
+
+## Load libraries
+
+
+```{r}
+suppressPackageStartupMessages({
+  library(here)
+  library(scran)
+  library(scater)
+  library(scuttle)
+  library(scales)
+  library(readr)
+  library(Seurat)
+  library(ggpubr)
+  library(tidyverse)
+  library(qs2)
+  library(patchwork)
+  # library(DropletUtils)
+})
+
+```
+
+
+## get paths
+
+```{r}
+silva_path <- here("data/GeneralCellrangerOutputs/Silva2021/GSE164772_sc_dr_Silva2021Counts.txt.gz")
+silva_meta_path <- here("data/GeneralCellrangerOutputs/Silva2021/GSE164772_sc_dr_Silva2021_metadata.csv.gz")
+```
+
+## Plotting themes
+
+```{r}
+plot_sizing <- theme_bw()+ theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "black"),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank()) 
+
+
+plot_sizing_seurat <- theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "black"),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14))
+
+rotate_x <- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+strip_fix <- theme(strip.background = element_rect(fill = "white"), 
+                   strip.text = element_text(size = 14))
+
+```
+
+
+# Generate seurat object
+
+Taking their filtered data, no need for QC filtering.
+
+```{r}
+
+counts <- read.table(silva_path )
+
+meta <- read_csv(silva_meta_path, show_col_types = F) %>% 
+  column_to_rownames("...1")
+
+Level_01_seuratObject <- CreateSeuratObject(
+													counts=counts, 
+													meta.data = meta,
+													min.cells = 5)
+
+Level_01_seuratObject
+
+```
+
+
+Add % mito
+
+```{r}
+Level_01_seuratObject$`percent.mt` <- PercentageFeatureSet(Level_01_seuratObject, pattern = "^[mtMtMT-]")
+```
+
+
+# Plot QC metrics
+
+```{r}
+make_density_plots <- function(seurat =Level_01_seuratObject, sample){
+  plot_list <- list()
+
+  #ncount
+  p1 <- ggplot(seurat@meta.data %>% filter(., individual == sample), aes(x=log10(nCount_RNA))) + 
+    geom_histogram(aes(y=..density..), colour="black", fill="white")+
+    geom_density(alpha=.2, fill="#FF6666")+ xlab('log10(count)') +
+    plot_sizing + ggtitle(sprintf("Library size, %s", sample))
+  
+  #nfeat
+  p2 <- ggplot(seurat@meta.data %>% filter(., individual == sample), aes(x=log10(nFeature_RNA))) + 
+    geom_histogram(aes(y=..density..), colour="black", fill="white")+
+    geom_density(alpha=.2, fill="#FF6666")+ xlab('log10(nfeature)') +
+    plot_sizing + ggtitle(sprintf("#features, %s",  sample))
+  
+  #mito
+  p3 <- ggplot(seurat@meta.data %>% filter(., individual == sample), aes(x=percent.mt)) + 
+    geom_histogram(aes(y=..density..), colour="black", fill="white")+
+    geom_density(alpha=.2, fill="#FF6666")+ xlab('percent.mt') +
+    plot_sizing + ggtitle(sprintf("mito, %s",  sample))
+  
+  return(p1+p2+p3)
+  
+}
+
+make_correlation_plots <- function(seurat =Level_01_seuratObject, sample){
+  plot_list <- list()
+
+  meta <- seurat@meta.data %>% 
+    filter(.,  individual == sample) %>% 
+    mutate(., log10ncount = log10(nCount_RNA),
+              log10nfeat = log10(nFeature_RNA))
+  
+  #ncount
+  p1 <- ggscatter(meta, x = "log10ncount", y = "log10nfeat",
+          add = "reg.line",                                 
+          conf.int = TRUE,                                
+          add.params = list(color = "red4",
+                            fill = "lightgray")) +
+    plot_sizing + ylab("log10(#features)") + xlab("log10(nCount)") +
+    stat_cor(method = "pearson", label.x = 3, label.y = 4, size = 5) +
+    ggtitle(sprintf("Lib size vs #features, %s", sample))
+  
+  #nfeat
+  p2 <- ggscatter(meta, x = "log10ncount", y = "percent.mt",
+          add = "reg.line",                                 
+          conf.int = TRUE,                                
+          add.params = list(color = "red4",
+                            fill = "lightgray")) +
+    plot_sizing + ylab("%mito") + xlab("log10(nCount)") +
+    stat_cor(method = "pearson", label.x = 3, label.y = 80, size = 5) +
+    ggtitle(sprintf("Lib size vs mito, %s",  sample))
+  
+  #mito
+  p3 <- ggscatter(meta, x = "log10nfeat", y = "percent.mt",
+          add = "reg.line",                                 
+          conf.int = TRUE,                                
+          add.params = list(color = "red4",
+                            fill = "lightgray")) +
+    plot_sizing + ylab("%mito") + xlab("log10(#features)") +
+    stat_cor(method = "pearson", label.x = 2.6, label.y = 80, size = 5) +
+    ggtitle(sprintf("#features vs mito, %s",  sample))
+  
+  return(p1+p2+p3)
+  
+}
+```
+
+
+## Lib size, nfeatures, %mito
+
+
+```{r, fig.align='center', fig.height=10, fig.width=10, warning=FALSE}
+plot_list <- lapply(Level_01_seuratObject$individual %>% unique(), function(S) make_density_plots(sample=S))
+
+wrap_plots(plot_list, ncol=1) + plot_layout(axis_titles = "collect")
+```
+
+
+## Correlations
+
+```{r, fig.align='center', fig.height=10, fig.width=15, warning=FALSE}
+
+plot_list <- lapply(Level_01_seuratObject$individual %>% unique(), function(S) make_correlation_plots(sample=S))
+
+wrap_plots(plot_list, ncol=1) + plot_layout(axis_titles = "collect")
+
+```
+
+# Subset to juvenile only
+
+Only looking at juvenile samples
+
+```{r}
+cells_to_keep <- Level_01_seuratObject@meta.data %>% 
+  filter(.,age=="Juvenile") %>% 
+  rownames()
+
+juvenile_only <- subset(Level_01_seuratObject, cells = cells_to_keep)
+```
+
+
+
+## Process object (juvenile)
+
+Using what they provide in the methods setion of their paper. Though skipping regressing out for now. 
+
+
+```{r}
+juvenile_only <- NormalizeData(object = juvenile_only, scale.factor = 10000, verbose=F) %>% 
+    FindVariableFeatures(., nfeatures = 6000, verbose=F) %>% 
+  ScaleData(., vars.to.regress = "nFeature_RNA", verbose=F) %>%
+  RunPCA(., verbose=F) %>% 
+  FindNeighbors(., dims = 1:30, verbose=F) %>% 
+  FindClusters(., resolution = seq(0.1,1,0.1), verbose=F) %>% 
+  RunUMAP(., dims = 1:30, verbose=F)
+  
+```
+
+## Inspect dataset (juvenile)
+
+The Jclusters/JMclusters are their clusters!
+
+```{r, fig.height=15, fig.width=15, fig.align='center'}
+p1 <- DimPlot(object = juvenile_only, group.by = "individual", shuffle = T)
+p2 <- FeaturePlot(object = juvenile_only, feature = "nCount_RNA")
+p3 <- FeaturePlot(object = juvenile_only, feature = "nFeature_RNA")
+p4 <- FeaturePlot(object = juvenile_only, feature = "percent.mt")
+p5 <- FeaturePlot(object = juvenile_only, feature = "mpeg1.1")
+p6 <- DimPlot(object = juvenile_only, group.by = "Jclusters", shuffle = T, label = T) + theme(legend.position = "none")
+p7 <- DimPlot(object = juvenile_only, group.by = "JMclusters", shuffle = T, label = T) + theme(legend.position = "none")
+ 
+p1+p2+p3+p4+p5+p6+p7
+
+```
+
+Looks like they did not subset J02 - maybe due to QC concerns?
+
+Add QC metrics boxplots. 
+
+```{r, fig.align='center', fig.height=10, fig.width=15}
+plot_list <- list()
+
+plot_list[[1]] <- juvenile_only@meta.data %>% 
+  ggplot(., aes(y = log10(nCount_RNA), x = Jclusters, fill=Jclusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = "none") + ggtitle("Library size")
+
+plot_list[[2]] <- juvenile_only@meta.data %>% 
+  ggplot(., aes(y = log10(nFeature_RNA), x = Jclusters, fill=Jclusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = "none") + ggtitle("#genes")
+
+plot_list[[3]] <- juvenile_only@meta.data %>% 
+  ggplot(., aes(y = percent.mt, x = Jclusters, fill=Jclusters)) +
+  geom_boxplot() +
+  plot_sizing + theme(legend.position = "none") + ggtitle("%mito")
+
+wrap_plots(plot_list, axes = "collect", ncol=2)
+```
+
+J02 is likely low quality cells.
+
+
+Make immune cells dotplot.
+
+```{r}
+genes_immune_annotation <- c("pcna", "mki67", "top2a", #prolif
+                             "apoc1", "apoeb", "slco2b1", "sall3a", "p2ry12", "tgfbr1b", "slc2a5", #MG
+                              "mpeg1.1","csf1ra", "csf1rb", #shared MG + CAM
+                             "c1qa", "cybb", "marco", "f13a1b", "anxa5b", "nampta", "pla2g7", "tgfb1", "lyve1b", #CAM
+                            "xcr1a.1", "flt3", "batf3", #DC
+                            "cd79a", "cd79b", "pax5", #Bcell
+                            "gzm3.3", "il2rb", "ccl38.6", #NK
+                            "zap70", "lck", "il7r", #Tcell
+                            "tbx21", "runx3", #ILC1
+                            "il4", "gata3", "il13" #ILC2
+                            )
+```
+
+
+```{r, fig.align='center', fig.width=8, fig.height=4}
+DotPlot(object = juvenile_only, features = genes_immune_annotation, group.by = "Jclusters") + rotate_x
+```
+
+
+## Annotate (juvenile)
+
+```{r}
+juvenile_only$celltype <- case_when(juvenile_only$Jclusters %in% c("J0", "J12") ~ "MG",
+                                    juvenile_only$Jclusters == "J05" ~ "CAM",
+                                    juvenile_only$Jclusters == "J06" ~ "prolif MG",
+                                    juvenile_only$Jclusters %in% c("J01", "J14") ~ "NK cells",
+                                    juvenile_only$Jclusters == "J04" ~ "T cells" ,
+                                    juvenile_only$Jclusters == "J03" ~ "DC" ,
+                                    juvenile_only$Jclusters == "J10" ~ "prolif immune",
+                                    juvenile_only$Jclusters == "J08" ~ "ILC1",
+                                    juvenile_only$Jclusters == "J11" ~ "ILC2", 
+                                    juvenile_only$Jclusters ==  "J02"  ~ "low quality",
+                                    juvenile_only$Jclusters %in% c("J07", "J09", "J13", "J15") ~ "unknown")
+
+juvenile_only$celltype <- factor(juvenile_only$celltype, levels = rev(c("prolif MG", "MG", "CAM", "prolif immune","DC", "NK cells", "T cells", "ILC1", "ILC2","low quality", "unknown")))
+```
+
+
+Remake dotplot
+
+```{r, fig.align='center', fig.width=10, fig.height=4}
+DotPlot(object = juvenile_only, features = genes_immune_annotation, group.by = "celltype") + rotate_x
+```
+
+```{r}
+celltype_colours <- rev(c("#544D51", 
+                      "#D3CFD4", 
+                      "#EB2C23", 
+                      "#c3d5f7",
+                      "#3876E6",
+                      "#D667F8",
+                      "#36BDBA",
+                      "#F19D36", 
+                      "#B5136D", 
+                      "beige", 
+                      "bisque1"))
+names(celltype_colours) <- levels(juvenile_only$celltype)
+
+```
+
+
+```{r}
+DimPlot(object = juvenile_only, group.by = "celltype", cols=celltype_colours, shuffle = T)
+```
+
+
+Combine
+
+```{r, fig.align='center', fig.height=5, fig.width=18}
+p1 <- DotPlot(object = juvenile_only, features = genes_immune_annotation, group.by = "celltype") + rotate_x
+p2 <- DimPlot(object = juvenile_only, group.by = "celltype", cols=celltype_colours, shuffle = T, label = T)
+
+p2 + p1 + plot_layout(widths = c(1, 2))
+```
+
+So they seem to pick the DC (JM3) cluster as well, calling it macrophages.. They clearly express the genes used to label DC in the MA, but they do express mpeg1.1 quite highly. In the original paper, they also use ccl19a.1
+
+
+```{r, fig.align='center', fig.height=5, fig.width=5}
+FeaturePlot(object = juvenile_only, features = "ccl19a.1")
+
+```
+
+I actually can't find any immediate proof that that gene is a macrophage marker, everything points to DC..
+
+[This paper](https://elifesciences.org/articles/91427) shows that DCs do in fact express mpeg1.1 as well. This also has adult zebrafish brain sequencing, but its only CD45+ FACS. They also have a violin plot showing that ccl19a.1 marks DC...
+
+
+
+# subset to putative CAM/MG (juvenile) + reprocess
+
+
+```{r}
+
+cells_to_keep <- juvenile_only@meta.data %>% 
+  filter(.,celltype %in% c("CAM", "MG", "prolif MG")) %>% 
+  rownames()
+
+CAM_MG_only <- subset(juvenile_only, cells = cells_to_keep)
+
+CAM_MG_only <- NormalizeData(object = CAM_MG_only, scale.factor = 10000, verbose=F) %>% 
+    FindVariableFeatures(., nfeatures = 6000, verbose=F) %>% 
+  ScaleData(., vars.to.regress = "nFeature_RNA", verbose=F) %>%
+  # ScaleData(., verbose=F) %>% 
+  RunPCA(., verbose=F) %>% 
+  FindNeighbors(., dims = 1:30, verbose=F) %>% 
+  FindClusters(., resolution = seq(0.1,1,0.1), verbose=F) %>% 
+  RunUMAP(., dims = 1:30, verbose=F)
+```
+
+## Inspect dataset (juvenile, CAM/MG only)
+
+
+```{r, fig.height=15, fig.width=15, fig.align='center'}
+p1 <- DimPlot(object = CAM_MG_only, group.by = "individual", shuffle = T)
+p2 <- FeaturePlot(object = CAM_MG_only, feature = "nCount_RNA")
+p3 <- FeaturePlot(object = CAM_MG_only, feature = "nFeature_RNA")
+p4 <- FeaturePlot(object = CAM_MG_only, feature = "f13a1b")
+p5 <- DimPlot(object = CAM_MG_only, group.by = "JMclusters", shuffle = T, label = T) + theme(legend.position = "none")  
+p6 <- DimPlot(object = CAM_MG_only, group.by = "Jclusters", shuffle = T, label = T) + theme(legend.position = "none")  
+p7 <- DimPlot(object = CAM_MG_only, group.by = "celltype", shuffle = T, cols = celltype_colours)  
+ 
+p1+p2+p3+p4+p5+p6+p7
+
+```
+
+
+# Compute region specific signatures scores - putative CAM/MG 
+
+
+So the paper where this data is from, they claim to discover spatially different microglia they call NAM and SAM. As we're using their clusters, I can directly link them here.. 
+
+
+JM1 (maps to one of our MG cluster) -> NAMs (Optic tectum genes)
+
+JM4 (maps to our CAM cluster) -> SAMs (Hind brain genes)
+
+
+They use their own bulk RNA-seq to derive region specific signatures, I've downloaded the data and replicated it. 
+
+The filters they used were:
+
+adj. p < 0.05, log2 fold change >1.2, basemean >100
+
+PercentageFeatureSet was used to determine a signature. We will add the module score as well. 
+
+
+```{r}
+bulk_signatures <- read_csv(here("data/OT_HB_genesets.csv"), show_col_types = F)
+
+HB <- bulk_signatures %>% 
+  filter(., baseMean > 100 & log2FoldChange > 1.2 & padj < 0.05) %>% 
+  pull(Gene_ID)
+
+OT <- bulk_signatures %>% 
+  filter(., baseMean > 100 & log2FoldChange < -1.2 & padj < 0.05) %>% 
+  pull(Gene_ID)
+
+CAM_MG_only$percent_HB <- PercentageFeatureSet(object = CAM_MG_only, features = HB) 
+CAM_MG_only <- AddModuleScore(object = CAM_MG_only,features = list(HB), name = "module_score_HB_") 
+CAM_MG_only$percent_OT <- PercentageFeatureSet(object = CAM_MG_only, features = OT) 
+CAM_MG_only <- AddModuleScore(object = CAM_MG_only,features = list(OT), name = "module_score_OT_") 
+
+```
+
+Look at violin plots. 
+
+```{r, fig.align='center', fig.height=6, fig.width=6}
+p1 <- CAM_MG_only@meta.data %>% 
+  pivot_longer(., cols = c("JMclusters", "celltype"), names_to = "cluster_name", values_to = "cluster") %>% 
+  ggplot(., aes(y = percent_OT, x = cluster, fill = cluster))+
+  geom_violin() +
+  facet_wrap(~cluster_name, scales="free") + plot_sizing+ strip_fix + ggtitle("Optic tectum signature [%]") + theme(legend.position = "none")
+
+p2 <- CAM_MG_only@meta.data %>% 
+  pivot_longer(., cols = c("JMclusters", "celltype"), names_to = "cluster_name", values_to = "cluster") %>% 
+  ggplot(., aes(y = percent_HB, x = cluster, fill = cluster))+
+  geom_violin() +
+  facet_wrap(~cluster_name, scales="free") + plot_sizing+ strip_fix + ggtitle("Hindbrain signature [%]") + theme(legend.position = "none")
+
+p1+p2 + plot_layout(ncol = 1)
+
+```
+
+What about the module score?
+
+```{r, fig.align='center', fig.height=6, fig.width=6}
+p1 <- CAM_MG_only@meta.data %>% 
+  pivot_longer(., cols = c("JMclusters", "celltype"), names_to = "cluster_name", values_to = "cluster") %>% 
+  ggplot(., aes(y = module_score_OT_1, x = cluster, fill = cluster))+
+  geom_violin() +
+  facet_wrap(~cluster_name, scales="free") + plot_sizing+ strip_fix + ggtitle("Optic tectum signature [enrichment]") + theme(legend.position = "none")
+
+p2 <- CAM_MG_only@meta.data %>% 
+  pivot_longer(., cols = c("JMclusters", "celltype"), names_to = "cluster_name", values_to = "cluster") %>% 
+  ggplot(., aes(y = module_score_HB_1, x = cluster, fill = cluster))+
+  geom_violin() +
+  facet_wrap(~cluster_name, scales="free") + plot_sizing+ strip_fix + ggtitle("Hindbrain signature [enrichment]") + theme(legend.position = "none")
+
+p1+p2 + plot_layout(ncol = 1)
+
+```
+
+Okay, we probably want to move away from just the JM cluster and add our own subclusters. 
+
+
+```{r, fig.align='center', fig.height=5, fig.width=5}
+DimPlot(object = CAM_MG_only, group.by = "RNA_snn_res.0.2", label = T)
+```
+
+```{r}
+
+CAM_MG_only$celltype_subclusters <- case_when(CAM_MG_only$RNA_snn_res.0.2 == 0 ~ "MG_1", 
+                                              CAM_MG_only$RNA_snn_res.0.2 == 1 ~ "MG_2",
+                                              CAM_MG_only$RNA_snn_res.0.2 == 2 ~ "CAM",
+                                              CAM_MG_only$RNA_snn_res.0.2 == 3 ~ "prolif MG",
+                                              CAM_MG_only$RNA_snn_res.0.2 == 4 ~ "MG_3",)
+
+
+colours_celltype_subclusters <- c("#EB2C23", "#544D51", "grey90", "grey70", "grey45")
+names(colours_celltype_subclusters) <- c("CAM", "prolif MG", "MG_1", "MG_2", "MG_3")
+```
+
+Make boxplots instead
+
+```{r, fig.align='center', fig.height=8, fig.width=5}
+CAM_MG_only@meta.data %>% 
+  pivot_longer(., cols = c("module_score_OT_1", "module_score_HB_1"), names_to = "score_name", values_to = "score") %>% 
+  ggplot(., aes(y = score, x = celltype_subclusters, fill = celltype_subclusters))+
+  geom_boxplot(outlier.size = 0.5) +
+  geom_jitter( size=0.01, alpha=0.3)+
+  geom_hline(yintercept = 0, linewidth=0.8)+
+  scale_fill_manual(values = colours_celltype_subclusters) +
+  facet_wrap(~score_name, scales="free_y", ncol=1) + plot_sizing+ strip_fix + theme(legend.position = "none") + xlab("")
+```
+
+
+
+# Export
+
+```{r}
+filename <- here("output/data/seurat_objects/Silva2021_28dpf_AllImmuneCells_juvenile.qs2")
+qs_save(object = juvenile_only, file = filename)
+
+filename <- here("output/data/seurat_objects/Silva2021_28dpf_CAM_MGonly_juvenile.qs2")
+qs_save(object = CAM_MG_only, file = filename)
+```
+
+
+

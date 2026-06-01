@@ -1,0 +1,419 @@
+---
+title: "Make Figures for putative CAM analysis"
+author: "Michelle Meier"
+date: "`r format(Sys.time(), '%d. %B %Y')`"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: inline
+---
+
+# Introduction
+
+This markdown generates individual panels for illustrator figure. This ensures we keep the same dimensions. We also tend to adjust things like text size in illustrator as its a bit easier. 
+
+## Load libraries
+
+
+```{r}
+suppressPackageStartupMessages({
+  library(here)
+  library(scran)
+  library(scater)
+  library(scuttle)
+  library(scales)
+  library(readr)
+  library(Seurat)
+  library(ggpubr)
+  library(tidyverse)
+  library(qs2)
+  library(patchwork)
+  library(simspec)
+  library(scDblFinder)
+  library(clustree)
+})
+
+```
+
+## Functions 
+
+Write some core functions. 
+
+```{r}
+plot_umap <- function(seurat.object,
+                      group, 
+                      title,
+                      save.dir = output,
+                      cols = NULL,
+                      project.name, 
+                      size = 10){
+  #with legend
+  umap <- DimPlot(seurat.object,
+                  group.by = group,
+                  cols = cols,
+                  shuffle = T, 
+                  pt.size = 1,
+                  label = F) + NoAxes() + ggtitle(title)
+  
+  umapFileName <- sprintf('%s/%s_umap_%s.pdf', save.dir, project.name, group)
+  ggsave(umapFileName,
+         umap,
+         device="pdf",
+         width=size,
+         height=size,
+         units="cm",
+         scale=1)
+  
+  #without legend
+  umap.nolegend <- umap + NoLegend() + NoAxes() + ggtitle('')
+  umapFileName <- sprintf('%s/%s_umap_%s_nolegend.pdf', save.dir, project.name, group)
+  ggsave(umapFileName,
+         umap.nolegend,
+         device="pdf",
+         width=size,
+         height=size,
+         units="cm",
+         scale=1)
+  
+  return(umap)
+}
+
+
+```
+
+
+## Plotting themes
+
+```{r}
+plot_sizing <- theme_bw()+ theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "black"),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank()) 
+
+
+plot_sizing_seurat <- theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "black"),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 14))
+
+rotate_x <- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+strip_fix <- theme(strip.background = element_rect(fill = "white"), 
+                   strip.text = element_text(size = 14))
+
+```
+
+
+## Load data
+
+```{r}
+timecourse <- qs_read(here("output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_02_immuneCells.qs2"))
+wounded <-qs_read(here("output/data/seurat_objects/Wounded_7dpf_Level_02_immuneCells.qs2"))
+wounded$Sample_Name <- factor(wounded$Sample_Name, levels = c("Control_kdrl", "Wounded_kdrl")) #wildtype always first
+silva_immune_all <- qs_read(here("output/data/seurat_objects/Silva2021_28dpf_AllImmuneCells_juvenile.qs2"))
+silva_MG <- qs_read(here("output/data/seurat_objects/Silva2021_28dpf_CAM_MGonly_juvenile.qs2"))
+
+
+#general output path
+output <- here("output/figures/")
+
+```
+
+
+## Colours 
+
+```{r}
+#celltype colours
+
+celltype_colours <- c("red2", "black", "grey")
+names(celltype_colours) <- c("MG/Macro subpop", "Neutrophil", "MG")
+
+stage.colours <- c( '#e4c6d3','#be7794', '#a95175', '#823e59', '#3f1e2c', "#190c11")
+names(stage.colours) <-  c('40hpf', '3dpf', '4dpf', '5dpf', '7dpf', "30dpf")
+
+expression_colours <- c("#d9d9d9", "#40004b")
+
+celltype_immune_colours <- rev(c("#544D51", 
+                      "#D3CFD4", 
+                      "#EB2C23", 
+                      "#c3d5f7",
+                      "#3876E6",
+                      "#D667F8",
+                      "#36BDBA",
+                      "#F19D36", 
+                      "#B5136D", 
+                      "beige", 
+                      "bisque1"))
+
+
+names(celltype_immune_colours) <- levels(silva_immune_all$celltype)
+
+wounded_colours <- c(
+  "#dbe2c6", #wildtype
+  "#657c95" #wounded
+)
+
+names(wounded_colours) <- c("Control_kdrl", "Wounded_kdrl")
+
+```
+
+## Genes
+
+```{r}
+genes <- c("apoc1", "apoeb", "p2ry12", "sall3a", #microglia
+           "csf1rb", "spi1a", "mpeg1.1", "marco", #shared
+           "cybb", "f13a1b", "cd74b", "tgfbi", #CAM
+            "lyve1a","lyve1b", "mrc1a","mrc1b" , "dab2", "stab1", "stab2" , #functional genes for BAM equivalence
+           "mpx", "mmp9", "lyz"#neutro
+           )
+
+genes_immune_annotation <- c("pcna", "mki67", "top2a", #prolif
+                             "apoc1", "apoeb", "slco2b1", "sall3a", "p2ry12", "tgfbr1b", "slc2a5", #MG
+                              "mpeg1.1","csf1ra", "csf1rb", #shared MG + CAM
+                             "c1qa", "cybb", "marco", "f13a1b", "anxa5b", "nampta", "pla2g7", "tgfb1", "lyve1b", #CAM
+                            "xcr1a.1", "flt3", "batf3", #DC
+                            "cd79a", "cd79b", "pax5", #Bcell
+                            "gzm3.3", "il2rb", "ccl38.6", #NK
+                            "zap70", "lck", "il7r", #Tcell
+                            "tbx21", "runx3", #ILC1
+                            "il4", "gata3", "il13" #ILC2
+                            )
+```
+
+
+
+# Wounded dataset panels
+
+
+```{r, fig.align='center', fig.height=8, fig.width=15, warning=FALSE}
+names(celltype_colours) <- c( "MG/Macro subpop\nn=70","Neutrophil\nn=27","MG\nn=252")
+name <- "Wounded_GSE270486"
+```
+
+
+```{r, fig.align='center', fig.height=8, fig.width=15, warning=FALSE}
+
+#use function
+p1 <- plot_umap(seurat.object = wounded, 
+                group = "myeloid_celltype", 
+                cols = celltype_colours, 
+                title = "Myeloid populations (n=349)", 
+                project.name = name)
+p2 <- plot_umap(seurat.object = wounded, 
+                group = "Sample_Name", 
+                cols = wounded_colours, 
+                title = "Wounding status", 
+                project.name = name)
+
+#dotplot
+p3 <- DotPlot(wounded, features = genes, group.by = "myeloid_celltype", cols = expression_colours) + rotate_x + ylab("") + ggtitle("Gene expression patterns") 
+ggsave(sprintf("%s/%s_dotplot_myeloid_celltype.pdf", output, name),
+         p3,
+         device="pdf",
+         width=20,
+         height=10,
+         units="cm",
+         scale=1)
+
+#stacked barplot
+p4 <- wounded@meta.data %>% 
+  group_by(myeloid_celltype, Sample_Name) %>% 
+  summarise(., count =n()) %>% 
+  ggplot(., aes(x = myeloid_celltype, y= count, fill=Sample_Name)) +
+  geom_bar(stat="identity", position = "stack") + 
+  scale_fill_manual(values = wounded_colours) +
+  geom_text(aes(label = count), 
+            position = position_stack(vjust=0.5),size=5, color="black")+
+  plot_sizing  + xlab("")  +rotate_x + ggtitle("Wounded status composition")
+ggsave(sprintf("%s/%s_stacked_barplot_myeloid_celltype_wounded.pdf", output, name),
+         p4,
+         device="pdf",
+         width=13,
+         height=10,
+         units="cm",
+         scale=1)
+
+  
+(p1+p2+plot_layout(ncol=2, axes="collect")) +p3+p4 
+```
+
+
+# Timecourse dataset panels
+
+
+```{r}
+name <- "Timecourse_GSE270486_GSE188342"
+names(celltype_colours) <- c("MG/Macro subpop\nn=941", "Neutrophil\nn=1651", "MG\nn=133")
+```
+
+
+```{r, fig.align='center', fig.height=8, fig.width=18, eval=FALSE}
+#use function
+p1 <- plot_umap(seurat.object = timecourse, 
+                group = "prelim_celltype", 
+                cols = celltype_colours, 
+                title = "Myeloid populations (n=2725)", 
+                project.name = name)
+p2 <- plot_umap(seurat.object = timecourse, 
+                group = "Stage", 
+                cols = stage.colours, 
+                title = "Stage", 
+                project.name = name)
+p3 <- DotPlot(object = timecourse, features = genes, group.by = "prelim_celltype", cols = expression_colours)+ rotate_x + ylab("") + xlab("") + ggtitle("Gene expression patterns")
+ggsave(sprintf("%s/%s_dotplot_myeloid_celltype.pdf", output, name),
+         p3,
+         device="pdf",
+         width=20,
+         height=10,
+         units="cm",
+         scale=1)
+
+
+design_layout <- c("
+                   AB
+                   CX")
+
+
+wrap_elements(p1 & theme(plot.title = element_text(size = 18, face = "italic"))) +
+  wrap_elements(p2 & theme(plot.title = element_text(size = 18, face = "italic")))+ 
+  wrap_elements(p3 & theme(plot.title = element_text(size = 18, face = "italic")))+
+  plot_layout(design = design_layout)
+
+```
+
+
+
+# Silva et al Immune cells panels
+
+Add N to celltype names + rename "CAMs" and microglia.
+
+```{r}
+silva_MG$celltype <- case_when(silva_MG$celltype == "CAM" ~ "MG/Macro subpop\nn=428",
+                               silva_MG$celltype == "prolif MG" ~ "prolif MG\nn=406",
+                               silva_MG$celltype == "MG" ~ "MG\nn=2141"
+                               )
+
+silva_MG$celltype_subclusters <- case_when(silva_MG$celltype_subclusters == "CAM" ~ "MG/Macro subpop\nn=422",
+                               silva_MG$celltype_subclusters == "MG_1" ~ "MG_1\nn=1609",
+                               silva_MG$celltype_subclusters == "MG_2" ~ "MG_2\nn=511",
+                               silva_MG$celltype_subclusters == "MG_3" ~ "MG_3\nn=105",
+                               silva_MG$celltype_subclusters == "prolif MG" ~ "prolif MG\nn=328"
+                               )
+```
+
+
+```{r}
+name_all <- "Silva_All_ImmuneCells"
+name_MG <- "Silva_MG"
+
+celltype_silva_colours <- c("#544D51", 
+                      "#D3CFD4", 
+                      "#EB2C23")
+
+names(celltype_silva_colours) <- c("prolif MG\nn=406", 
+                                   "MG\nn=2141", 
+                                   "MG/Macro subpop\nn=428")
+
+colours_celltype_subclusters <- c("#EB2C23", "#544D51", "grey90", "grey70", "grey45")
+names(colours_celltype_subclusters) <- c("MG/Macro subpop\nn=422", "prolif MG\nn=328",
+                                         "MG_1\nn=1609", "MG_2\nn=511", "MG_3\nn=105")
+```
+
+
+
+```{r}
+p1 <- plot_umap(seurat.object = silva_immune_all, 
+                group = "celltype", 
+                cols = celltype_immune_colours, 
+                title = "Immune cells (n=6666)", 
+                project.name = name_all)
+
+p2 <- DotPlot(object = silva_immune_all, features = genes_immune_annotation, 
+              group.by = "celltype",
+              cols = expression_colours) + rotate_x + ggtitle("Annotation dotplot")
+ggsave(sprintf("%s/%s_dotplot_allimmunecells.pdf", output, name_all),
+         p2,
+         device="pdf",
+         width=25,
+         height=10,
+         units="cm",
+         scale=1)
+
+p3 <- plot_umap(seurat.object = silva_MG, 
+                group = "celltype", 
+                cols = celltype_silva_colours, 
+                title = "Microglia subpopulations (n=2975)", 
+                project.name = name_MG)
+
+p4 <- DotPlot(object = silva_MG, features = genes, 
+              group.by = "celltype",
+              cols = expression_colours) + rotate_x + ggtitle("Annotation dotplot")
+ggsave(sprintf("%s/%s_dotplot_MG_subpop.pdf", output, name_MG),
+         p4,
+         device="pdf",
+         width=20,
+         height=10,
+         units="cm",
+         scale=1)
+
+p5 <- plot_umap(seurat.object = silva_MG, 
+                group = "celltype_subclusters", 
+                cols = colours_celltype_subclusters, 
+                title = "Microglia subpopulations (n=2975)", 
+                project.name = name_MG)
+
+p6 <- silva_MG@meta.data %>% 
+  group_by(., celltype_subclusters, JMclusters) %>% 
+  summarise(., count=n()) %>% 
+  ggplot(., aes(x=celltype_subclusters, y=count, fill=JMclusters)) +
+  geom_bar(stat="identity", position = "fill") +
+  plot_sizing + rotate_x + xlab("") + ggtitle("Map to original clusters")
+
+ggsave(sprintf("%s/%s_stacked_barplot_celltype_subclusters_OG_clusters.pdf", output, name_MG),
+         p6,
+         device="pdf",
+         width=10,
+         height=10,
+         units="cm",
+         scale=1)
+
+p7 <- DotPlot(object = silva_MG, features = c("ctsa", "ctsba", "c1qa", "c1qc"), group.by = "celltype_subclusters", cols = expression_colours) + rotate_x + ggtitle("Location marker genes")
+ggsave(sprintf("%s/%s_dotplot_locationmarker.pdf", output, name_MG),
+         p7,
+         device="pdf",
+         width=12,
+         height=8,
+         units="cm",
+         scale=1)
+
+```
+
+
+Make two figures
+
+```{r, fig.align='center', fig.height=15, fig.width=15}
+
+design_layout <- c("
+                   AABBB
+                   AABBB
+                   CCDDD
+                   CCDDD
+                   EEFFF
+                   EEFFF
+                   GGFFF
+                   GGXXX")
+
+
+wrap_elements(p1 & theme(plot.title = element_text(size = 18, face = "italic"))) +
+  wrap_elements(p2 & theme(plot.title = element_text(size = 18, face = "italic")))+ 
+  wrap_elements(p3 & theme(plot.title = element_text(size = 18, face = "italic")))+
+  wrap_elements(p4& theme(plot.title = element_text(size = 18, face = "italic")))+
+  wrap_elements(p5& theme(plot.title = element_text(size = 18, face = "italic")))+
+  wrap_elements(p6& theme(plot.title = element_text(size = 18, face = "italic"))) +
+  wrap_elements(p7& theme(plot.title = element_text(size = 18, face = "italic")))+
+  plot_layout(design = design_layout)
+
+
+```
+
+

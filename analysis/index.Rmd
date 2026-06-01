@@ -1,5 +1,5 @@
 ---
-title: "Home"
+title: "Response to Matters Arising by Shimizu et al"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -8,4 +8,28 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+
+This website contains all the code used to generate the findings discussed in our response to Shimizu et al's Matters Arising. 
+
+
+# Make figure
+
+[Generate panels for figure]() - this markdown contains the code used to generate all the panels that went into the figure. Some text edits were made in illustrator. 
+
+
+# Processing of datasets 
+
+|**Link to analysis**|**Dataset**|**Description**|
+|:------------:|:------------:|:------------:|
+|[Timecourse - Level 01](Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.html)| Timecourse | QC filtering + processing of timecourse to Level 01 (all cells)|
+|[Timecourse - Level 02](Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.html)| Timecourse | QC filtering + processing of timecourse to Level 02 (immune cells). This includes cell type annotation at this level|
+|[Wounded - immune cells](Gaudi_Wounded_7dpf_putativeCAM_analysis.html)| Wounded | subset to only include macrophage + neutrophil clusters + re-processing. This includes cell type annotation at this level|
+|[Silva et al - re-analysis of public data](Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.html)| Silva et al (immune) | reprocess publicly available data available through [GSE164772](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164772) according to author's method description. This data was then also subset to only include myeloid sub populations. This includes cell type annotation at both the all cells, as well as only myeloid cells level|
+
+
+# Reproducability 
+
+All analysis was performed in R version 4.5.0 and package versions are tracked in renv.lock. If you wish to reproduce these findings, please make sure to download the provided data files from [zenodo]() and place then in the data or output/data folders. 
+
+
+

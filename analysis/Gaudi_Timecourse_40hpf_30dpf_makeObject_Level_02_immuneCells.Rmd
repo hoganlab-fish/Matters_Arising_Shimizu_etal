@@ -54,9 +54,11 @@ suppressPackageStartupMessages({
 
 ```{r}
 
-# Level_01_seuratObject <- qs_read(here("output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_01.qs2"))
+Level_01_seuratObject <- qs_read(here("output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_01.qs2"))
 
-Level_01_seuratObject <- qs_read("/Users/meiermichelle/Library/CloudStorage/OneDrive-PeterMac/HOGAN_LAB/analysis/BAM_quest/output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_01.qs2")
+Level_02_seuratObject_old <- qs_read("/Users/meiermichelle/Library/CloudStorage/OneDrive-PeterMac/HOGAN_LAB/analysis/BAM_quest/output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_02.qs2")
+
+
 
 ```
 
@@ -199,6 +201,7 @@ Level_02_seuratObject <-  RunUMAP(Level_02_seuratObject,
 ```
 
 
+
 ## UMAP overviews
 
 ```{r, fig.align='center', fig.height=10, fig.width=15}
@@ -252,7 +255,7 @@ wrap_plots(plot_list, axes = "collect", ncol=2)
 
 
 ```{r, fig.align='center', fig.height=20, fig.width=20}
-FeaturePlot(object = Level_02_seuratObject, features = c(genes_immune_select))
+FeaturePlot(object = Level_02_seuratObject, features = c(genes_immune_select, "rna_mki67"))
 ```
 
 Make dotplot

@@ -514,15 +514,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltreefeee55d77af0ebb5b44933aa033713814aee1749targetblankfeee55da">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree8e6f6ecb4d1ed912494f22e2ea228a2d0ab15d29targetblank8e6f6eca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/feee55d77af0ebb5b44933aa033713814aee1749" target="_blank">feee55d</a>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/8e6f6ecb4d1ed912494f22e2ea228a2d0ab15d29" target="_blank">8e6f6ec</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltreefeee55d77af0ebb5b44933aa033713814aee1749targetblankfeee55da"
+id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree8e6f6ecb4d1ed912494f22e2ea228a2d0ab15d29targetblank8e6f6eca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -532,7 +532,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/feee55d77af0ebb5b44933aa033713814aee1749" target="_blank">feee55d</a>.
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/8e6f6ecb4d1ed912494f22e2ea228a2d0ab15d29" target="_blank">8e6f6ec</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -551,22 +551,18 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    output/.DS_Store
+    Ignored:    output/data/
+    Ignored:    renv/
 
 Untracked files:
     Untracked:  analysis/MakeFigures.Rmd
-    Untracked:  data/DR_ribosomal_globin_genes.csv
-    Untracked:  data/GeneralCellrangerOutputs
-    Untracked:  data/Level_01_D10026_Wounded.qs2
-    Untracked:  data/OT_HB_genesets.csv
-    Untracked:  output/data/
     Untracked:  output/figures/
     Untracked:  renv.lock
-    Untracked:  renv/
 
 Unstaged changes:
     Modified:   .Rprofile
+    Modified:   .gitignore
     Modified:   _workflowr.yml
-    Modified:   analysis/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd
 
 </code></pre>
 <p>
@@ -613,6 +609,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8e6f6ecb4d1ed912494f22e2ea228a2d0ab15d29/analysis/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd" target="_blank">8e6f6ec</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+<td>
+wflow_publish("analysis/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/hoganlab-fish/Matters_Arising_Shimizu_etal/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.html" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -687,9 +717,9 @@ the genes used in Shimizu et al. </p>
 </div>
 <div id="load-data" class="section level2">
 <h2>load data</h2>
-<pre class="r"><code># Level_01_seuratObject &lt;- qs_read(here(&quot;output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_01.qs2&quot;))
+<pre class="r"><code>Level_01_seuratObject &lt;- qs_read(here(&quot;output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_01.qs2&quot;))
 
-Level_01_seuratObject &lt;- qs_read(&quot;/Users/meiermichelle/Library/CloudStorage/OneDrive-PeterMac/HOGAN_LAB/analysis/BAM_quest/output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_01.qs2&quot;)</code></pre>
+Level_02_seuratObject_old &lt;- qs_read(&quot;/Users/meiermichelle/Library/CloudStorage/OneDrive-PeterMac/HOGAN_LAB/analysis/BAM_quest/output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_02.qs2&quot;)</code></pre>
 </div>
 <div id="plotting-themes" class="section level2">
 <h2>Plotting themes</h2>
@@ -728,15 +758,126 @@ expression_colours &lt;-  c(&quot;#d9d9d9&quot;, &quot;#7a0177&quot;)</code></pr
 <p>Use the genes we decided on. Make UMAPs first.</p>
 <pre class="r"><code>FeaturePlot(object = Level_01_seuratObject, features = genes_immune_select)</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-6-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Make a dotplot, but first look at some resolutions.</p>
 <pre class="r"><code>clustree(Level_01_seuratObject)</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-7-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Visualise clusters from res 0.3-0.6.</p>
 <pre class="r"><code>resolutions &lt;- paste0(&quot;RNA_snn_res.&quot;, seq(0.3, 0.6, 0.1))
 
 
 DimPlot(object = Level_01_seuratObject, group.by = resolutions, shuffle = T)</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-8-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>None of these really make a difference for the clusters I think are
 immune cells. Pick 0.3</p>
 <pre class="r"><code>p1 &lt;- DotPlot(object = Level_01_seuratObject, features = genes_immune_select, group.by = &quot;RNA_snn_res.0.3&quot;) + rotate_x + ylab(&quot;&quot;) + xlab(&quot;&quot;)
@@ -745,6 +886,43 @@ p3 &lt;- DimPlot(object = Level_01_seuratObject, group.by = &quot;scDblFinder.cl
 
 p1+p2+p3</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-9-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Cluster 14 seems to be a doublet cluster. Cluster 15 seems to express
 the microglia genes, but is pretty far away from all the other clusters
 (but UMAP distance is not meaningful, so who knows)</p>
@@ -768,6 +946,43 @@ plot_list[[3]] &lt;- Level_01_seuratObject@meta.data %&gt;%
 
 wrap_plots(plot_list, axes = &quot;collect&quot;, ncol=2)</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-10-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>cluster 12 (likely macrophages) higher %mito, active cells</p>
 </div>
 <div id="re-process-immune-cells" class="section level1">
@@ -832,11 +1047,85 @@ plot_list[[6]] &lt;- DimPlot(object = Level_02_seuratObject, group.by = &quot;sc
 
 wrap_plots(plot_list, axes = &quot;collect&quot;)</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-13-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-13-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="clusters" class="section level2">
 <h2>Clusters</h2>
 <pre class="r"><code>DimPlot(object = Level_02_seuratObject, group.by = &quot;RNA_snn_res.0.1&quot;, label = T) + theme(legend.position = &quot;none&quot;) </code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-14-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-14-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Boxplots with metrics</p>
 <pre class="r"><code>plot_list &lt;- list()
 
@@ -857,20 +1146,133 @@ plot_list[[3]] &lt;- Level_02_seuratObject@meta.data %&gt;%
 
 wrap_plots(plot_list, axes = &quot;collect&quot;, ncol=2)</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-15-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="annotation" class="section level1">
 <h1>Annotation</h1>
 <div id="gene-expression-umaps" class="section level2">
 <h2>Gene expression UMAPs</h2>
-<pre class="r"><code>FeaturePlot(object = Level_02_seuratObject, features = c(genes_immune_select))</code></pre>
+<pre class="r"><code>FeaturePlot(object = Level_02_seuratObject, features = c(genes_immune_select, &quot;rna_mki67&quot;))</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-16-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
+Past versions of unnamed-chunk-16-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-16-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-16-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Make dotplot</p>
-<pre class="r"><code>p1 &lt;- DotPlot(object = Level_02_seuratObject, features = genes_immune_select, group.by = &quot;RNA_snn_res.0.1&quot;)+ rotate_x
-p2 &lt;- DimPlot(object = Level_02_seuratObject, group.by = &quot;RNA_snn_res.0.1&quot;, label = T) +theme(legend.position = &quot;none&quot;)
+<pre class="r"><code>p1 &lt;- DotPlot(object = Level_02_seuratObject, features = genes_immune_select, group.by = &quot;RNA_snn_res.0.1&quot;)+ rotate_x</code></pre>
+<pre><code>Warning: Scaling data with a low number of groups may produce misleading
+results</code></pre>
+<pre class="r"><code>p2 &lt;- DimPlot(object = Level_02_seuratObject, group.by = &quot;RNA_snn_res.0.1&quot;, label = T) +theme(legend.position = &quot;none&quot;)
 
 p1+p2</code></pre>
 <p><img src="figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-17-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-17-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/8826ce81220f47019d2fded1fd25c2a94185f6ca/docs/figure/Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.Rmd/unnamed-chunk-17-1.png" target="_blank">8826ce8</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Add annotation based on gene expression pattern</p>
 <pre class="r"><code>Level_02_seuratObject$prelim_celltype &lt;- case_when(Level_02_seuratObject$RNA_snn_res.0.1 == 1 ~ &quot;MG/Macro subpop&quot;,
                                                    Level_02_seuratObject$RNA_snn_res.0.1 == 3 ~ &quot;MG&quot;,
@@ -878,7 +1280,7 @@ p1+p2</code></pre>
 <pre class="r"><code>Level_02_seuratObject$prelim_celltype %&gt;% table()</code></pre>
 <pre><code>.
              MG MG/Macro subpop      Neutrophil 
-            133             941            1607 </code></pre>
+            133             941            1651 </code></pre>
 <p>Add fancy names with name with N.</p>
 <pre class="r"><code>Level_02_seuratObject$prelim_celltype &lt;- case_when(Level_02_seuratObject$RNA_snn_res.0.1 == 1 ~ &quot;MG/Macro subpop\nn=941&quot;,
                                                    Level_02_seuratObject$RNA_snn_res.0.1 == 3 ~ &quot;MG\nn=133&quot;,
@@ -891,7 +1293,7 @@ Level_02_seuratObject$prelim_celltype &lt;- as.factor(Level_02_seuratObject$prel
                          40hpf 3dpf 4dpf 5dpf 7dpf 30dpf
   MG\nn=133                  0    9    6   39   77     2
   MG/Macro subpop\nn=941   635   60    5  193   11    37
-  Neutrophil\nn=1651      1577   17    1    9    0     3</code></pre>
+  Neutrophil\nn=1651      1619   17    1    9    0     5</code></pre>
 </div>
 </div>
 <div id="export" class="section level1">
@@ -981,29 +1383,30 @@ loaded via a namespace (and not attached):
  [91] DelayedArray_0.36.1      plotly_4.12.0            stringfish_0.18.0       
  [94] rtracklayer_1.70.1       checkmate_2.3.4          lmtest_0.9-40           
  [97] callr_3.7.6              digest_0.6.37            goftest_1.2-3           
-[100] spatstat.utils_3.2-2     rmarkdown_2.29           XVector_0.50.0          
-[103] htmltools_0.5.8.1        pkgconfig_2.0.3          fastmap_1.2.0           
-[106] rlang_1.2.0              htmlwidgets_1.6.4        UCSC.utils_1.6.1        
-[109] shiny_1.13.0             farver_2.1.2             jquerylib_0.1.4         
-[112] zoo_1.8-15               jsonlite_2.0.0           BiocParallel_1.44.0     
-[115] RCurl_1.98-1.18          BiocSingular_1.26.1      magrittr_2.0.3          
-[118] Formula_1.2-5            dotCall64_1.2            Rcpp_1.0.14             
-[121] viridis_0.6.5            reticulate_1.46.0        stringi_1.8.7           
-[124] MASS_7.3-65              plyr_1.8.9               parallel_4.5.0          
-[127] listenv_0.10.1           ggrepel_0.9.8            deldir_2.0-4            
-[130] graphlayouts_1.2.3       Biostrings_2.78.0        splines_4.5.0           
-[133] tensor_1.5.1             hms_1.1.4                locfit_1.5-9.12         
-[136] ps_1.9.1                 igraph_2.2.3             spatstat.geom_3.7-3     
-[139] ggsignif_0.6.4           RcppHNSW_0.6.0           reshape2_1.4.5          
-[142] ScaledMatrix_1.18.0      XML_3.99-0.23            evaluate_1.0.3          
-[145] RcppParallel_5.1.11-2    renv_1.1.4               BiocManager_1.30.27     
-[148] tweenr_2.0.3             tzdb_0.5.0               httpuv_1.6.16           
-[151] RANN_2.6.2               polyclip_1.10-7          scattermore_1.2         
-[154] ggforce_0.5.0            rsvd_1.0.5               broom_1.0.12            
-[157] xtable_1.8-8             restfulr_0.0.16          RSpectra_0.16-2         
-[160] rstatix_0.7.3            later_1.4.2              viridisLite_0.4.3       
-[163] memoise_2.0.1            GenomicAlignments_1.46.0 beeswarm_0.4.0          
-[166] cluster_2.1.8.1          timechange_0.4.0         globals_0.19.1          </code></pre>
+[100] presto_1.0.0             spatstat.utils_3.2-2     rmarkdown_2.29          
+[103] XVector_0.50.0           htmltools_0.5.8.1        pkgconfig_2.0.3         
+[106] fastmap_1.2.0            rlang_1.2.0              htmlwidgets_1.6.4       
+[109] UCSC.utils_1.6.1         shiny_1.13.0             farver_2.1.2            
+[112] jquerylib_0.1.4          zoo_1.8-15               jsonlite_2.0.0          
+[115] BiocParallel_1.44.0      RCurl_1.98-1.18          BiocSingular_1.26.1     
+[118] magrittr_2.0.3           Formula_1.2-5            dotCall64_1.2           
+[121] Rcpp_1.0.14              viridis_0.6.5            reticulate_1.46.0       
+[124] stringi_1.8.7            MASS_7.3-65              plyr_1.8.9              
+[127] parallel_4.5.0           listenv_0.10.1           ggrepel_0.9.8           
+[130] deldir_2.0-4             graphlayouts_1.2.3       Biostrings_2.78.0       
+[133] splines_4.5.0            tensor_1.5.1             hms_1.1.4               
+[136] locfit_1.5-9.12          ps_1.9.1                 igraph_2.2.3            
+[139] spatstat.geom_3.7-3      ggsignif_0.6.4           RcppHNSW_0.6.0          
+[142] reshape2_1.4.5           ScaledMatrix_1.18.0      XML_3.99-0.23           
+[145] evaluate_1.0.3           RcppParallel_5.1.11-2    renv_1.1.4              
+[148] BiocManager_1.30.27      tweenr_2.0.3             tzdb_0.5.0              
+[151] httpuv_1.6.16            RANN_2.6.2               polyclip_1.10-7         
+[154] scattermore_1.2          ggforce_0.5.0            rsvd_1.0.5              
+[157] broom_1.0.12             xtable_1.8-8             restfulr_0.0.16         
+[160] RSpectra_0.16-2          rstatix_0.7.3            later_1.4.2             
+[163] viridisLite_0.4.3        memoise_2.0.1            GenomicAlignments_1.46.0
+[166] beeswarm_0.4.0           cluster_2.1.8.1          timechange_0.4.0        
+[169] globals_0.19.1          </code></pre>
 </div>
 </div>
 </div>

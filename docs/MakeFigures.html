@@ -352,7 +352,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Make Figures for putative CAM analysis</h1>
 <h4 class="author">Michelle Meier</h4>
-<h4 class="date">01. June 2026</h4>
+<h4 class="date">09. June 2026</h4>
 
 </div>
 
@@ -381,7 +381,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-06-01
+<strong>Last updated:</strong> 2026-06-09
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -513,15 +513,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree0d6156edb7a0061b4f468a8ae6c3d7447df78549targetblank0d6156ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltreebfa129f192ace6e27505b54a570e2771c689e12ctargetblankbfa129fa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/0d6156edb7a0061b4f468a8ae6c3d7447df78549" target="_blank">0d6156e</a>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/bfa129f192ace6e27505b54a570e2771c689e12c" target="_blank">bfa129f</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree0d6156edb7a0061b4f468a8ae6c3d7447df78549targetblank0d6156ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltreebfa129f192ace6e27505b54a570e2771c689e12ctargetblankbfa129fa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -531,7 +531,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/0d6156edb7a0061b4f468a8ae6c3d7447df78549" target="_blank">0d6156e</a>.
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/bfa129f192ace6e27505b54a570e2771c689e12c" target="_blank">bfa129f</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -549,12 +549,11 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
+    Ignored:    analysis/not_tracked/
     Ignored:    output/.DS_Store
     Ignored:    output/data/
     Ignored:    renv/
-
-Untracked files:
-    Untracked:  output/figures/
 
 </code></pre>
 <p>
@@ -599,6 +598,41 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/bfa129f192ace6e27505b54a570e2771c689e12c/analysis/MakeFigures.Rmd" target="_blank">bfa129f</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-09
+</td>
+<td>
+wflow_publish(c("analysis/MakeFigures.Rmd",
+"analysis/Gaudi_Wounded_7dpf_putativeCAM_analysis.Rmd"))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/hoganlab-fish/Matters_Arising_Shimizu_etal/193f910e797b9ebfb73e437fdda30d8baecc7fcf/docs/MakeFigures.html" target="_blank">193f910</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -661,7 +695,8 @@ wflow_publish("analysis/MakeFigures.Rmd")
 <h1>Introduction</h1>
 <p>This markdown generates individual panels for illustrator figure.
 This ensures we keep the same dimensions. We also tend to adjust things
-like text size in illustrator as its a bit easier.</p>
+like text size in illustrator as its a bit easier. Note that some of
+these plots also did not end up in the final figure.</p>
 <div id="load-libraries" class="section level2">
 <h2>Load libraries</h2>
 <pre class="r"><code>suppressPackageStartupMessages({
@@ -755,8 +790,7 @@ strip_fix &lt;- theme(strip.background = element_rect(fill = &quot;white&quot;),
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
-<pre class="r"><code>timecourse &lt;- qs_read(here(&quot;output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_02_immuneCells.qs2&quot;))
-wounded &lt;-qs_read(here(&quot;output/data/seurat_objects/Wounded_7dpf_Level_02_immuneCells.qs2&quot;))
+<pre class="r"><code>wounded &lt;-qs_read(here(&quot;output/data/seurat_objects/Wounded_7dpf_Level_02_immuneCells.qs2&quot;))
 wounded$Sample_Name &lt;- factor(wounded$Sample_Name, levels = c(&quot;Control_kdrl&quot;, &quot;Wounded_kdrl&quot;)) #wildtype always first
 silva_immune_all &lt;- qs_read(here(&quot;output/data/seurat_objects/Silva2021_28dpf_AllImmuneCells_juvenile.qs2&quot;))
 silva_MG &lt;- qs_read(here(&quot;output/data/seurat_objects/Silva2021_28dpf_CAM_MGonly_juvenile.qs2&quot;))
@@ -772,8 +806,6 @@ output &lt;- here(&quot;output/figures/&quot;)</code></pre>
 celltype_colours &lt;- c(&quot;red2&quot;, &quot;black&quot;, &quot;grey&quot;)
 names(celltype_colours) &lt;- c(&quot;MG/Macro subpop&quot;, &quot;Neutrophil&quot;, &quot;MG&quot;)
 
-stage.colours &lt;- c( &#39;#e4c6d3&#39;,&#39;#be7794&#39;, &#39;#a95175&#39;, &#39;#823e59&#39;, &#39;#3f1e2c&#39;, &quot;#190c11&quot;)
-names(stage.colours) &lt;-  c(&#39;40hpf&#39;, &#39;3dpf&#39;, &#39;4dpf&#39;, &#39;5dpf&#39;, &#39;7dpf&#39;, &quot;30dpf&quot;)
 
 expression_colours &lt;- c(&quot;#d9d9d9&quot;, &quot;#40004b&quot;)
 
@@ -912,44 +944,6 @@ Michelle Meier
 </div>
 </div>
 </div>
-<div id="timecourse-dataset-panels" class="section level1">
-<h1>Timecourse dataset panels</h1>
-<pre class="r"><code>name &lt;- &quot;Timecourse_GSE270486_GSE188342&quot;
-names(celltype_colours) &lt;- c(&quot;MG/Macro subpop\nn=941&quot;, &quot;Neutrophil\nn=1651&quot;, &quot;MG\nn=133&quot;)</code></pre>
-<pre class="r"><code>#use function
-p1 &lt;- plot_umap(seurat.object = timecourse, 
-                group = &quot;prelim_celltype&quot;, 
-                cols = celltype_colours, 
-                title = &quot;Myeloid populations (n=2725)&quot;, 
-                project.name = name)
-p2 &lt;- plot_umap(seurat.object = timecourse, 
-                group = &quot;Stage&quot;, 
-                cols = stage.colours, 
-                title = &quot;Stage&quot;, 
-                project.name = name)
-p3 &lt;- DotPlot(object = timecourse, features = genes, group.by = &quot;prelim_celltype&quot;, cols = expression_colours)+ rotate_x + ylab(&quot;&quot;) + xlab(&quot;&quot;) + ggtitle(&quot;Gene expression patterns&quot;)</code></pre>
-<pre><code>Warning: Scaling data with a low number of groups may produce misleading
-results</code></pre>
-<pre class="r"><code>ggsave(sprintf(&quot;%s/%s_dotplot_myeloid_celltype.pdf&quot;, output, name),
-         p3,
-         device=&quot;pdf&quot;,
-         width=20,
-         height=8,
-         units=&quot;cm&quot;,
-         scale=1)
-
-
-design_layout &lt;- c(&quot;
-                   AB
-                   CX&quot;)
-
-
-wrap_elements(p1 &amp; theme(plot.title = element_text(size = 18, face = &quot;italic&quot;))) +
-  wrap_elements(p2 &amp; theme(plot.title = element_text(size = 18, face = &quot;italic&quot;)))+ 
-  wrap_elements(p3 &amp; theme(plot.title = element_text(size = 18, face = &quot;italic&quot;)))+
-  plot_layout(design = design_layout)</code></pre>
-<p><img src="figure/MakeFigures.Rmd/unnamed-chunk-10-1.png" width="1728" style="display: block; margin: auto;" /></p>
-</div>
 <div id="silva-et-al-immune-cells-panels" class="section level1">
 <h1>Silva et al Immune cells panels</h1>
 <p>Add N to celltype names + rename “CAMs” and microglia.</p>
@@ -1079,44 +1073,7 @@ wrap_elements(p1 &amp; theme(plot.title = element_text(size = 18, face = &quot;i
   wrap_elements(p6&amp; theme(plot.title = element_text(size = 18, face = &quot;italic&quot;))) +
   wrap_elements(p7&amp; theme(plot.title = element_text(size = 18, face = &quot;italic&quot;)))+
   plot_layout(design = design_layout)</code></pre>
-<p><img src="figure/MakeFigures.Rmd/unnamed-chunk-14-1.png" width="1440" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
-Past versions of unnamed-chunk-14-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-14-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/931d6ffde47e79b18a4324d97b1645cefb0a5651/docs/figure/MakeFigures.Rmd/unnamed-chunk-14-1.png" target="_blank">931d6ff</a>
-</td>
-<td>
-Michelle Meier
-</td>
-<td>
-2026-06-01
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/MakeFigures.Rmd/unnamed-chunk-12-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

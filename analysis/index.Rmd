@@ -23,7 +23,7 @@ The exported pdf files can be found in `output/figures/`
 
 |**Link to analysis**|**Dataset**|**Description**|
 |:------------:|:------------:|:------------:|
-|[Wounded - immune cells](Gaudi_Wounded_7dpf_putativeCAM_analysis.html)| Wounded | subset to only include macrophage + neutrophil clusters + re-processing. This includes cell type annotation at this level|
+|[Wounded - immune cells](Gaudi_Wounded_7dpf_putativeCAM_analysis.html)| Wounded | Gaudi et al dataset available through [GSE270486](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE270486), subset to only include macrophage + neutrophil clusters + re-processing. This includes cell type annotation at this level|
 |[Silva et al - re-analysis of public data](Silva_28dpf_makeObject_Level_01_AllCells_Level_02_ImmuneCells.html)| Silva et al (immune) | reprocess publicly available data available through [GSE164772](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164772) according to author's method description. This data was then also subset to only include myeloid sub populations. This includes cell type annotation at both the all cells, as well as only myeloid cells level|
 
 

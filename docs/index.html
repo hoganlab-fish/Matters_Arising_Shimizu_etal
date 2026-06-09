@@ -303,7 +303,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-06-02
+<strong>Last updated:</strong> 2026-06-10
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -351,15 +351,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree6855813e6b2cf3ab31416636c43a133e2360f6a4targetblank6855813a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltreed9ba1eed740e79b221eba887cda9b95495b33c9btargetblankd9ba1eea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/6855813e6b2cf3ab31416636c43a133e2360f6a4" target="_blank">6855813</a>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/d9ba1eed740e79b221eba887cda9b95495b33c9b" target="_blank">d9ba1ee</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltree6855813e6b2cf3ab31416636c43a133e2360f6a4targetblank6855813a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomhoganlabfishMattersArisingShimizuetaltreed9ba1eed740e79b221eba887cda9b95495b33c9btargetblankd9ba1eea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -369,7 +369,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/6855813e6b2cf3ab31416636c43a133e2360f6a4" target="_blank">6855813</a>.
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/tree/d9ba1eed740e79b221eba887cda9b95495b33c9b" target="_blank">d9ba1ee</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -387,12 +387,11 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/not_tracked/
     Ignored:    output/.DS_Store
     Ignored:    output/data/
+    Ignored:    output/figures/.DS_Store
     Ignored:    renv/
-
-Untracked files:
-    Untracked:  output/figures/
 
 </code></pre>
 <p>
@@ -436,6 +435,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/hoganlab-fish/Matters_Arising_Shimizu_etal/blob/d9ba1eed740e79b221eba887cda9b95495b33c9b/analysis/index.Rmd" target="_blank">d9ba1ee</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-10
+</td>
+<td>
+wflow_publish("analysis/index.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/hoganlab-fish/Matters_Arising_Shimizu_etal/04c448b10e92df2fd78dd34fa604ec10bc3f0ea3/docs/index.html" target="_blank">04c448b</a>
+</td>
+<td>
+Michelle Meier
+</td>
+<td>
+2026-06-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -573,22 +606,6 @@ into the figure. Some text edits were made in illustrator.</p>
 <tbody>
 <tr class="odd">
 <td align="center"><a
-href="Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_01_allCells.html">Timecourse
-- Level 01</a></td>
-<td align="center">Timecourse</td>
-<td align="center">QC filtering + processing of timecourse to Level 01
-(all cells)</td>
-</tr>
-<tr class="even">
-<td align="center"><a
-href="Gaudi_Timecourse_40hpf_30dpf_makeObject_Level_02_immuneCells.html">Timecourse
-- Level 02</a></td>
-<td align="center">Timecourse</td>
-<td align="center">QC filtering + processing of timecourse to Level 02
-(immune cells). This includes cell type annotation at this level</td>
-</tr>
-<tr class="odd">
-<td align="center"><a
 href="Gaudi_Wounded_7dpf_putativeCAM_analysis.html">Wounded - immune
 cells</a></td>
 <td align="center">Wounded</td>
@@ -616,9 +633,11 @@ level</td>
 <h1>Reproducability</h1>
 <p>All analysis was performed in R version 4.5.0 and package versions
 are tracked in renv.lock. If you wish to reproduce these findings,
-please make sure to download the provided data files from <a
-href="">zenodo</a> and place then in the <code>data</code> or
-<code>output/data</code> folders.</p>
+please make sure to download the input files from GEO and place them in
+<code>data</code>. Alternatively, you can download the processed Seurat
+files in qs2 format from <a
+href="https://zenodo.org/uploads/20604538">zenodo</a> and place them in
+<code>output/data</code>.</p>
 </div>
 </div>
 </div>

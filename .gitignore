@@ -12,4 +12,5 @@ analysis/site_libs
 renv/
 data/
 output/data
-
+analysis/not_tracked
+docs/not_tracked

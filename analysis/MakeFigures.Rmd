@@ -9,7 +9,7 @@ editor_options:
 
 # Introduction
 
-This markdown generates individual panels for illustrator figure. This ensures we keep the same dimensions. We also tend to adjust things like text size in illustrator as its a bit easier. 
+This markdown generates individual panels for illustrator figure. This ensures we keep the same dimensions. We also tend to adjust things like text size in illustrator as its a bit easier. Note that some of these plots also did not end up in the final figure. 
 
 ## Load libraries
 
@@ -107,7 +107,6 @@ strip_fix <- theme(strip.background = element_rect(fill = "white"),
 ## Load data
 
 ```{r}
-timecourse <- qs_read(here("output/data/seurat_objects/Timecourse_40hpf_30dpf_Level_02_immuneCells.qs2"))
 wounded <-qs_read(here("output/data/seurat_objects/Wounded_7dpf_Level_02_immuneCells.qs2"))
 wounded$Sample_Name <- factor(wounded$Sample_Name, levels = c("Control_kdrl", "Wounded_kdrl")) #wildtype always first
 silva_immune_all <- qs_read(here("output/data/seurat_objects/Silva2021_28dpf_AllImmuneCells_juvenile.qs2"))
@@ -128,8 +127,6 @@ output <- here("output/figures/")
 celltype_colours <- c("red2", "black", "grey")
 names(celltype_colours) <- c("MG/Macro subpop", "Neutrophil", "MG")
 
-stage.colours <- c( '#e4c6d3','#be7794', '#a95175', '#823e59', '#3f1e2c', "#190c11")
-names(stage.colours) <-  c('40hpf', '3dpf', '4dpf', '5dpf', '7dpf', "30dpf")
 
 expression_colours <- c("#d9d9d9", "#40004b")
 
@@ -236,51 +233,6 @@ ggsave(sprintf("%s/%s_stacked_barplot_myeloid_celltype_wounded.pdf", output, nam
   
 (p1+p2+plot_layout(ncol=2, axes="collect")) +p3+p4 
 ```
-
-
-# Timecourse dataset panels
-
-
-```{r}
-name <- "Timecourse_GSE270486_GSE188342"
-names(celltype_colours) <- c("MG/Macro subpop\nn=941", "Neutrophil\nn=1651", "MG\nn=133")
-```
-
-
-```{r, fig.align='center', fig.height=8, fig.width=18}
-#use function
-p1 <- plot_umap(seurat.object = timecourse, 
-                group = "prelim_celltype", 
-                cols = celltype_colours, 
-                title = "Myeloid populations (n=2725)", 
-                project.name = name)
-p2 <- plot_umap(seurat.object = timecourse, 
-                group = "Stage", 
-                cols = stage.colours, 
-                title = "Stage", 
-                project.name = name)
-p3 <- DotPlot(object = timecourse, features = genes, group.by = "prelim_celltype", cols = expression_colours)+ rotate_x + ylab("") + xlab("") + ggtitle("Gene expression patterns")
-ggsave(sprintf("%s/%s_dotplot_myeloid_celltype.pdf", output, name),
-         p3,
-         device="pdf",
-         width=20,
-         height=8,
-         units="cm",
-         scale=1)
-
-
-design_layout <- c("
-                   AB
-                   CX")
-
-
-wrap_elements(p1 & theme(plot.title = element_text(size = 18, face = "italic"))) +
-  wrap_elements(p2 & theme(plot.title = element_text(size = 18, face = "italic")))+ 
-  wrap_elements(p3 & theme(plot.title = element_text(size = 18, face = "italic")))+
-  plot_layout(design = design_layout)
-
-```
-
 
 
 # Silva et al Immune cells panels

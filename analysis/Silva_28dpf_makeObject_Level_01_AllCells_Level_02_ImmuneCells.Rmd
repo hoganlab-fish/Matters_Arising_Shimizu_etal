@@ -80,7 +80,7 @@ meta <- read_csv(silva_meta_path, show_col_types = F) %>%
 Level_01_seuratObject <- CreateSeuratObject(
 													counts=counts, 
 													meta.data = meta,
-													min.cells = 5)
+													min.cells = 1)
 
 Level_01_seuratObject
 

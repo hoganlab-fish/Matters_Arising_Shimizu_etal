@@ -245,10 +245,10 @@ silva_MG$celltype <- case_when(silva_MG$celltype == "CAM" ~ "MG/Macro subpop\nn=
                                silva_MG$celltype == "MG" ~ "MG\nn=2141"
                                )
 
-silva_MG$celltype_subclusters <- case_when(silva_MG$celltype_subclusters == "CAM" ~ "MG/Macro subpop\nn=422",
-                               silva_MG$celltype_subclusters == "MG_1" ~ "MG_1\nn=1609",
-                               silva_MG$celltype_subclusters == "MG_2" ~ "MG_2\nn=511",
-                               silva_MG$celltype_subclusters == "MG_3" ~ "MG_3\nn=105",
+silva_MG$celltype_subclusters <- case_when(silva_MG$celltype_subclusters == "CAM" ~ "MG/Macro subpop\nn=421",
+                               silva_MG$celltype_subclusters == "MG_1" ~ "MG_1\nn=1610",
+                               silva_MG$celltype_subclusters == "MG_2" ~ "MG_2\nn=508",
+                               silva_MG$celltype_subclusters == "MG_3" ~ "MG_3\nn=108",
                                silva_MG$celltype_subclusters == "prolif MG" ~ "prolif MG\nn=328"
                                )
 ```
@@ -267,8 +267,8 @@ names(celltype_silva_colours) <- c("prolif MG\nn=406",
                                    "MG/Macro subpop\nn=428")
 
 colours_celltype_subclusters <- c("#EB2C23", "#544D51", "grey90", "grey70", "grey45")
-names(colours_celltype_subclusters) <- c("MG/Macro subpop\nn=422", "prolif MG\nn=328",
-                                         "MG_1\nn=1609", "MG_2\nn=511", "MG_3\nn=105")
+names(colours_celltype_subclusters) <- c("MG/Macro subpop\nn=421", "prolif MG\nn=328",
+                                         "MG_1\nn=1610", "MG_2\nn=508", "MG_3\nn=108")
 ```
 
 

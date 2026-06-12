@@ -29,7 +29,7 @@ The exported pdf files can be found in `output/figures/`
 
 # Reproducability 
 
-All analysis was performed in R version 4.5.0 and package versions are tracked in renv.lock. If you wish to reproduce these findings, please make sure to download the input files from GEO and place them in `data`. Alternatively, you can download the processed Seurat files in qs2 format from [zenodo](https://zenodo.org/uploads/20604538) and place them in `output/data`. 
+All analysis was performed in R version 4.5.0 and package versions are tracked in renv.lock. If you wish to reproduce these findings, please make sure to download the input files from GEO and place them in `data`. Alternatively, you can download the processed Seurat files in qs2 format from [zenodo](https://doi.org/10.5281/zenodo.20641550) and place them in `output/data`. 
 
 
 
